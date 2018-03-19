@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Picture</title>
+
+    <link th:href="@{../css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{../css/bootstrap-theme.css}" rel="stylesheet"/>
+    <link th:href="@{../css/theme.css}" rel="stylesheet"/>
+
+    <style>
+        .margin20 {
+            margin-top: 20px;
+            height:200px;
+            text-align: center;
+            overflow: hidden;
+        }
+        img{
+            width:200px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container theme-showcase" role="main">
+    <div class="page-header">
+        <h1>Thumbnails
+        <button class="btn btn-default pull-right" id="uploadPicture">upload picture</button>
+        </h1>
+    </div>
+    <div class="row featurette">
+        <div class="col-lg-3 margin20">
+            <a th:href="@{../img/1.jpg}" target="_blank">
+                <img th:src="@{../img/1.jpg}"/>
+                <label>hello world!</label>
+            </a>
+        </div>
+        <div class="col-lg-3 margin20" th:each="m,iterStat:${medias}">
+            <a th:href="@{'../' + ${m.src}}" target="_blank">
+                <img th:src="@{'../' + ${m.src}}"/>
+                <label>hello world!</label>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="uploadDiv" style="display: none;">
+    <div class="col-lg-12">
+        <form id="uploadForm" class="form-horizontal" enctype="multipart/form-data"><!-- action="albums/uploadFiles" method="post"-->
+            <input type="hidden" name="albumId" id="hiddenAlbumId" th:value="${albumid}" />
+            <div class="form-group">
+                <label for="fileInput" class="col-lg-3 control-label">CHOOSE_FILE:</label>
+                <div id="fileInput" class="col-lg-4">
+                    <input type="file" class="form-control" name="file" id="file" multiple="multiple" accept="image/*"/>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+        </form>
+        <div class="form-group">
+            <div class="col-lg-6 col-lg-offset-2">
+                <button id="btnUpload" class="btn btn-primary"> UPLOAD </button>
+                &nbsp;&nbsp;
+                <button id="btnCancel" class="btn btn-default" type="reset"> CANCEL </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{../js/jquery-3.2.1.js}"></script>
+<script th:src="@{../js/bootstrap.js}"></script>
+<script th:src="@{../js/layer/layer.js}"></script>
+<script th:src="@{../js/own/picture.js}"></script>
+</body>
+</html>

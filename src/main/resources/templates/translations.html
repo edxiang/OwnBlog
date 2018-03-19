@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>for YJ</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{css/blog.css}" rel="stylesheet"/>
+    <style>
+        .t {
+            width: 66px;
+            position: fixed;
+            bottom: 40px;
+            right: 12.5%;
+            font-size: 0;
+            line-height: 0;
+            z-index: 100;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+            <div class="blog-post">
+                <h2 class="blog-post-title" th:text="${translation.title}">Sample blog post</h2>
+                <p class="blog-post-meta" th:text="${translation.createTime}">January 1, 2014</p>
+
+                <p th:utext="${translation.foreword}" class="text-primary" style="font-size: 14px;">this is the blog's
+                    foreword</p>
+                <hr/>
+                <p th:utext="${translation.content}" class="lead">this is the blog's content.</p>
+            </div>
+
+            <nav>
+                <ul class="pager">
+                    <li><a href="#">Previous</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </nav>
+
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
+                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            </div>
+            <div class="sidebar-module">
+                <h4>Archives</h4>
+                <ol class="list-unstyled">
+                    <li th:each="t,iterStat:${translations}">
+                        <a th:href="@{/translation(id=${t.id})}" href="translations.html" th:text="${t.title}">the article's title</a>
+                    </li>
+                </ol>
+            </div>
+        </div><!-- /.blog-sidebar -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<div class="t">
+    <a href="javascript:void(0);">
+        <img id="newTwitter" th:src="@{img/twitter.png}" alt="Generic placeholder image" width="75" height="75"/>
+    </a>
+</div>
+
+<div class="container" id="updateArticle" style="display: none;margin-top: 20px;margin-left: 20px;">
+    <form action="/translations/article" method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="title" placeholder="title" autofocus="autofocus"/>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" style="resize: none;" name="foreword"
+                              placeholder="foreword"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <textarea class="form-control" rows="20" style="resize: none;" name="content"
+                              placeholder="content"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p>
+                    <button type="submmit" class="btn btn-lg btn-primary">submit</button>
+                </p>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script th:src="@{js/jquery-3.2.1.js}"></script>
+<script th:src="@{js/bootstrap.js}"></script>
+<script th:src="@{js/layer/layer.js}"></script>
+<script>
+    $().ready(function () {
+        $("#newTwitter").bind('click', function () {
+            layer.open({
+                type: 1,
+                title: 'Update article',
+                skin: 'layui-layer-rim',
+                area: ['45%', '75%'],
+                content: $("#updateArticle")
+            });
+        });
+    });
+</script>
+</body>
+</html>

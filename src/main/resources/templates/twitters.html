@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Twitters</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{css/theme.css}" rel="stylesheet"/>
+
+    <style>
+        .t{
+            width: 66px;
+            position: fixed;
+            bottom: 40px;
+            right: 12.5%;
+            font-size: 0;
+            line-height: 0;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container theme-showcase">
+    <div class="jumbotron">
+        <h1>This is the my Twitters</h1>
+        <p>If you don't like it, there is nothing I can do. hhh</p>
+    </div>
+
+    <div class="page-header">
+        <h1>real-time moods</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-10" th:each="t,iterStat:${twitters}">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="${t.createTime}">the creation time</h3>
+                </div>
+                <div class="panel-body" th:utext="${t.twitter}">the content</div>
+            </div>
+        </div>
+    </div>
+    <hr class="featurette-divider"/>
+</div>
+
+<div class="container">
+    <footer>
+        <p>
+            <a href="main2.html" th:href="@{/index}">Back to Home</a>
+        </p>
+    </footer>
+</div>
+
+<div class="t">
+    <a href="javascript:void(0);">
+      <img id="newTwitter" th:src="@{img/twitter.png}" alt="Generic placeholder image" width="75" height="75" />
+    </a>
+</div>
+
+<div style="display:none" id="addTwitters">
+    <div class="container" style="width:380px;">
+        <form action="/twitters/newTwitter" method="post">
+            <div class="row" style="margin-top:10px;">
+                <div class="col-sm-6" style="margin-right:10px;">
+                    <label for="twitter">what's up now:</label>
+                </div>
+                <div class="col-sm-10">
+                    <textarea id="twitter" rows="3" class="form-control" name="twitter"></textarea>
+                </div>
+            </div>
+            <p class="text-center" style="margin-top:10px;clear: both;">
+                <button type="submit" class="btn btn-lg btn-primary">New</button>
+            </p>
+        </form>
+    </div>
+</div>
+
+
+
+<script th:src="@{js/jquery-3.2.1.js}"></script>
+<script th:src="@{js/bootstrap.js}"></script>
+<script th:src="@{js/holder.min.js}"></script>
+<script th:src="@{js/layer/layer.js}"></script>
+<script>
+    $().ready(function(){
+        $("#newTwitter").bind('click',function(){
+            layer.open({
+                type: 1,
+                title: 'New Twitter',
+                skin: 'layui-layer-rim',
+                area: ['450px', '230px'],
+                content: $("#addTwitters")
+            });
+        });
+    });
+</script>
+</body>
+
+</html>
