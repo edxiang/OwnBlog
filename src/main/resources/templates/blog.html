@@ -1,85 +1,155 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
     <title>Blog</title>
 
     <!-- Bootstrap core CSS -->
-    <link th:href="@{../css/bootstrap.css}" rel="stylesheet" />
-    <link th:href="@{../css/blog.css}" rel="stylesheet" />
+    <link th:href="@{../css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{../css/blog.css}" rel="stylesheet"/>
+    <link th:href="@{../css/theme.css}" rel="stylesheet"/>
 
-  </head>
+    <style>
+        .t{
+            width: 66px;
+            position: fixed;
+            bottom: 40px;
+            right: 12.5%;
+            font-size: 0;
+            line-height: 0;
+            z-index: 100;
+        }
+    </style>
 
-  <body>
+</head>
 
-    <div class="blog-masthead">
-      <div class="container">
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
         <nav class="blog-nav">
-          <a class="blog-nav-item" th:href="@{/index}">Home</a>
-          <a class="blog-nav-item" th:href="@{/blogs}">Blogs</a>
+            <a class="blog-nav-item" th:href="@{/index}">Home</a>
+            <a class="blog-nav-item" th:href="@{/blogs}">Blogs</a>
         </nav>
-      </div>
     </div>
+</div>
 
-    <div class="container" style="margin-top: 20px;">
-      <div class="row">
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
 
         <div class="col-sm-8 blog-main">
 
-          <div class="blog-post">
-            <h2 class="blog-post-title" th:text="${blog.title}">Sample blog post</h2>
-            <p class="blog-post-meta" th:text="${blog.createTime}">January 1, 2014</p>
+            <div class="blog-post">
+                <h2 class="blog-post-title" th:text="${blog.title}">Sample blog post</h2>
+                <p class="blog-post-meta" th:text="${blog.createTime}">January 1, 2014</p>
 
-            <p th:utext="${blog.foreword}" class="text-primary" style="font-size: 14px;">this is the blog's foreword</p>
-            <hr/>
-            <p th:utext="${blog.content}" class="lead">his is the blog's content.</p>
-          </div>
+                <p th:utext="${blog.foreword}" class="text-primary" style="font-size: 14px;">this is the blog's
+                    foreword</p>
+                <hr/>
+                <p th:utext="${blog.content}" class="lead">this is the blog's content.</p>
+            </div>
 
-          <nav>
-            <ul class="pager">
-              <li><a href="#">Previous</a></li>
-              <li><a href="#">Next</a></li>
-            </ul>
-          </nav>
+            <nav>
+                <ul class="pager">
+                    <li><a href="#">Previous</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </nav>
+            <hr class="featurette-divider"/>
 
+            <div class="row">
+                <div class="col-sm-12" th:each="c,iterStat:${commentList}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" th:text="${c.name} +' --- '+ ${c.createTime}">Panel title</h3>
+                        </div>
+                        <div class="panel-body" th:utext="${c.comments}">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div><!-- /.blog-main -->
 
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-          </div>
-          <div class="sidebar-module">
-            <h4>Archives</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
-            </ol>
-          </div>
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
+                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            </div>
+            <div class="sidebar-module">
+                <h4>Archives</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">March 2014</a></li>
+                    <li><a href="#">February 2014</a></li>
+                    <li><a href="#">January 2014</a></li>
+                    <li><a href="#">December 2013</a></li>
+                    <li><a href="#">November 2013</a></li>
+                    <li><a href="#">October 2013</a></li>
+                    <li><a href="#">September 2013</a></li>
+                    <li><a href="#">August 2013</a></li>
+                    <li><a href="#">July 2013</a></li>
+                    <li><a href="#">June 2013</a></li>
+                    <li><a href="#">May 2013</a></li>
+                    <li><a href="#">April 2013</a></li>
+                </ol>
+            </div>
         </div><!-- /.blog-sidebar -->
 
-      </div><!-- /.row -->
+    </div><!-- /.row -->
 
-    </div><!-- /.container -->
+</div><!-- /.container -->
+
+<div class="t">
+    <a href="javascript:void(0);">
+        <img id="newTwitter" th:src="@{../img/twitter.png}" alt="Generic placeholder image" width="75" height="75" />
+    </a>
+</div>
+
+<div style="display:none" id="newComment">
+    <div class="container" style="width:380px;">
+        <form action="/blogs/newComment" method="post">
+            <input type="hidden" name="id" th:value="${blog.id}" />
+            <div class="row" style="margin-top:10px;">
+                <div class="col-sm-3 pull-left">
+                    <label for="commenter" class="pull-right">name:</label>
+                </div>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="name" id="commenter" style="z-index: 1000;margin-bottom: 10px;"/>
+                </div>
+                <div class="col-sm-10">
+                    <textarea id="commentId" rows="3" class="form-control" name="comment"></textarea>
+                </div>
+            </div>
+            <p class="text-center" style="margin-top:10px;clear: both;">
+                <button type="submit" class="btn btn-lg btn-primary">New</button>
+            </p>
+        </form>
+    </div>
+</div>
 
 
-    <script th:src="@{../js/jquery-3.2.1.js}"></script>
-    <script th:src="@{../js/bootstrap.js}"></script>
-  </body>
+<script th:src="@{../js/jquery-3.2.1.js}"></script>
+<script th:src="@{../js/bootstrap.js}"></script>
+<script th:src="@{../js/layer/layer.js}"></script>
+<script>
+    $().ready(function(){
+        $("#newTwitter").bind('click',function(){
+            layer.open({
+                type: 1,
+                title: 'commitment',
+                skin: 'layui-layer-rim',
+                area: ['450px', '250px'],
+                content: $("#newComment")
+            });
+        });
+    });
+</script>
+</body>
 </html>

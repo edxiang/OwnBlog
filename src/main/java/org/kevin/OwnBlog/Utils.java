@@ -11,4 +11,8 @@ public class Utils {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
         return new Date();
     }
+
+    public static String replaceLineCharacter(String text){
+        return text.replaceAll("\\r\\n","<br/>");
+    }
 }

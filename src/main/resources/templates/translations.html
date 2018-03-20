@@ -79,34 +79,7 @@
     </a>
 </div>
 
-<div class="container" id="updateArticle" style="display: none;margin-top: 20px;margin-left: 20px;">
-    <form action="/translations/article" method="post">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="title" placeholder="title" autofocus="autofocus"/>
-                </div>
-            </div>
-            <div class="col-sm-9">
-                <div class="form-group">
-                    <textarea class="form-control" rows="3" style="resize: none;" name="foreword"
-                              placeholder="foreword"></textarea>
-                </div>
-            </div>
-            <div class="col-sm-9">
-                <div class="form-group">
-                    <textarea class="form-control" rows="20" style="resize: none;" name="content"
-                              placeholder="content"></textarea>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <p>
-                    <button type="submmit" class="btn btn-lg btn-primary">submit</button>
-                </p>
-            </div>
-        </div>
-    </form>
-</div>
+
 
 
 <script th:src="@{js/jquery-3.2.1.js}"></script>
@@ -120,7 +93,32 @@
                 title: 'Update article',
                 skin: 'layui-layer-rim',
                 area: ['45%', '75%'],
-                content: $("#updateArticle")
+                content: '<div class="container" id="updateArticle" style="margin-top: 20px;margin-left: 20px;">' +
+                '    <form action="/translations/article" method="post">' +
+                '        <div class="row">' +
+                '            <div class="col-sm-4">' +
+                '                <div class="form-group">' +
+                '                    <input type="text" class="form-control" name="title" placeholder="title" autofocus="autofocus"/>' +
+                '                </div>' +
+                '            </div>' +
+                '            <div class="col-sm-9">' +
+                '                <div class="form-group">' +
+                '                    <textarea class="form-control" rows="3" style="resize: none;" name="foreword" placeholder="foreword"></textarea>' +
+                '                </div>' +
+                '            </div>' +
+                '            <div class="col-sm-9">' +
+                '                <div class="form-group">' +
+                '                    <textarea class="form-control" rows="20" style="resize: none;" name="content" placeholder="content"></textarea>' +
+                '                </div>' +
+                '            </div>' +
+                '            <div class="col-sm-4">' +
+                '                <p>' +
+                '                    <button type="submmit" class="btn btn-lg btn-primary">submit</button>' +
+                '                </p>' +
+                '            </div>' +
+                '        </div>' +
+                '    </form>' +
+                '</div>'
             });
         });
     });

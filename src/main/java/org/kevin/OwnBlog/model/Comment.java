@@ -20,7 +20,16 @@ public class Comment {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String comments;
 
-    private String connection;
+    private long linkId;
+    /**
+     * 1:blog.
+     * 2:album.
+     * 3:translation.
+     */
+    private int type;
+
+    private String name;
+
     @Column(columnDefinition = "TIMESTAMP")
     private Date createTime;
 
