@@ -25,7 +25,7 @@ public class Tester {
         Album a = new Album();
         a.setTag("version 1");
         a.setTitle("test1");
-        albumService.save(a);
+        //albumService.save(a);
     }
 
 }
