@@ -1,13 +1,7 @@
 package org.kevin.OwnBlog.controller;
 
-import org.kevin.OwnBlog.model.Album;
-import org.kevin.OwnBlog.model.Blog;
-import org.kevin.OwnBlog.model.Translation;
-import org.kevin.OwnBlog.model.Twitter;
-import org.kevin.OwnBlog.service.AlbumService;
-import org.kevin.OwnBlog.service.BlogService;
-import org.kevin.OwnBlog.service.TranslationService;
-import org.kevin.OwnBlog.service.TwitterService;
+import org.kevin.OwnBlog.model.*;
+import org.kevin.OwnBlog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,6 +24,8 @@ public class MainController {
     private TwitterService twitterService;
     @Autowired
     private TranslationService translationService;
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping("/")
     public String mainPage() {
@@ -79,8 +75,13 @@ public class MainController {
             long id = Long.parseLong(value);
             Translation translation = translationService.findById(id);
             map.addAttribute("translation", translation);
+
+            List<Comment> commentList = commentService.findByLinkIdAndType(id, 3);
+            map.addAttribute("commentList", commentList);
         } else {
             map.addAttribute("translation", translations.get(0));
+            List<Comment> commentList = commentService.findByLinkIdAndType(translations.get(0).getId(), 3);
+            map.addAttribute("commentList", commentList);
         }
         return "translations";
     }

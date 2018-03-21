@@ -51,6 +51,18 @@
                 </ul>
             </nav>
 
+            <div class="row">
+                <div class="col-sm-12" th:each="c,iterStat:${commentList}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" th:text="${c.name} +' - '+ ${c.createTime}">Panel title</h3>
+                        </div>
+                        <div class="panel-body" th:utext="${c.comments}">
+                            Panel content
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div><!-- /.blog-main -->
 
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
@@ -66,6 +78,24 @@
                         <a th:href="@{/translation(id=${t.id})}" href="translations.html" th:text="${t.title}">the article's title</a>
                     </li>
                 </ol>
+            </div>
+
+            <div id="newComment">
+                <form action="/translations/newComment" method="post">
+                    <input type="hidden" name="id" th:value="${translation.id}"/>
+                    <div class="" style="margin-top:10px;">
+                        <div class="input-group" style="margin-bottom: 2%;">
+                            <span class="input-group-addon">Name</span>
+                            <input type="text" class="form-control"
+                                   aria-describedby="basic-addon1" name="name"/>
+                        </div>
+                        <textarea type="text" class="form-control" rows="5" placeholder="Just Say sth. Necessary"
+                                  aria-describedby="basic-addon1" name="comment"></textarea>
+                    </div>
+                    <p class="text-center" style="margin-top:10px;clear: both;">
+                        <button type="submit" class="btn btn-lg btn-primary">COMMENT</button>
+                    </p>
+                </form>
             </div>
         </div><!-- /.blog-sidebar -->
 
