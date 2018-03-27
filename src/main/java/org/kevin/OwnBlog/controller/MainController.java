@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
@@ -37,12 +38,28 @@ public class MainController {
         return "main2";
     }
 
-    @RequestMapping("/blogs")
-    public String blogs(ModelMap map) {
-        List<Blog> blogs = blogService.findAll();
-        Collections.reverse(blogs);
-        map.addAttribute("blogs", blogs);
-        return "blogs";
+    @RequestMapping("/login")
+    public String login(ModelMap map){
+        map.addAttribute("errorCode","0");
+        return "login";
+    }
+
+    @RequestMapping(value = "/logIn", method = RequestMethod.POST)
+    public String logIn(HttpServletRequest request,ModelMap map){
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if(username == null || password == null){
+            map.addAttribute("errorCode","1");
+            request.getSession().setAttribute("login",false);
+            return "login";
+        } else if(!username.equals("edxiao1993") || !password.equals("0322")){
+            map.addAttribute("errorCode","2");
+            request.getSession().setAttribute("login",false);
+            return "login";
+        } else {
+            request.getSession().setAttribute("login",true);
+            return "main2";
+        }
     }
 
     @RequestMapping("/albums")
@@ -52,37 +69,9 @@ public class MainController {
         return "albums";
     }
 
-    @RequestMapping("/twitters")
-    public String twitters(ModelMap map) {
-        List<Twitter> twitters = twitterService.findAll();
-        Collections.reverse(twitters);
-        map.addAttribute("twitters", twitters);
-        return "twitters";
-    }
-
     @RequestMapping("/addblog")
     public String addBlog() {
         return "addBlog";
     }
 
-    @RequestMapping("/translation")
-    public String translation(ModelMap map, HttpServletRequest request) {
-        List<Translation> translations = translationService.findAll();
-        map.addAttribute("translations", translations);
-
-        String value = request.getParameter("id");
-        if (value != null && !(value.trim()).equals("")) {
-            long id = Long.parseLong(value);
-            Translation translation = translationService.findById(id);
-            map.addAttribute("translation", translation);
-
-            List<Comment> commentList = commentService.findByLinkIdAndType(id, 3);
-            map.addAttribute("commentList", commentList);
-        } else {
-            map.addAttribute("translation", translations.get(0));
-            List<Comment> commentList = commentService.findByLinkIdAndType(translations.get(0).getId(), 3);
-            map.addAttribute("commentList", commentList);
-        }
-        return "translations";
-    }
 }

@@ -48,7 +48,7 @@ public class TwitterService {
     }
 
     public Page<Twitter> findTwitterCriteria(int page, int size, final TwitterCriteria twitterCriteria){
-        Pageable pageable = new PageRequest(page,size, Sort.Direction.ASC,"id");
+        Pageable pageable = new PageRequest(page,size, Sort.Direction.DESC,"id");
         Page<Twitter> twitterPage = twitterRepository.findAll(new Specification<Twitter>() {
             @Override
             public Predicate toPredicate(Root<Twitter> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {

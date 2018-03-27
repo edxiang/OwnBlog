@@ -1,43 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="utf-8" />
-		<title>template for all~</title>
-		<link th:href="@{css/bootstrap.css}" rel="stylesheet" />
-		<link th:href="@{css/demo.css}" rel="stylesheet" />
-	</head>
+<head>
+    <meta charset="utf-8"/>
+    <title>login</title>
+    <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{css/flat-ui.css}" rel="stylesheet"/>
+    <link th:href="@{css/demo.css}" rel="stylesheet"/>
+</head>
 
-	<body>
-		<div class="container">
-			<div class="login">
-				<div class="login-screen">
-					<div class="login-icon">
-						<img src="img/login/icon.png" alt="Welcome to Mail App" />
-						<h4>Welcome to <small>Kevin's Blog</small></h4>
-					</div>
+<body>
+<div class="container" style="margin-top:5%;">
+    <div class="login">
+        <div class="login-screen">
+            <div class="login-icon">
+                <img th:src="@{img/yj.JPG}" alt="Welcome to Mail App"/>
+                <h4>Welcome to
+                    <small>Kevin's Blog</small>
+                </h4>
+            </div>
+            <input type="hidden" value="0" id="code" th:value="${errorCode}"/>
 
-					<form action="login" method="post">
-						<div class="login-form">
-							<div class="form-group">
-								<input type="text" class="form-control login-field" placeholder="Username" id="login-usr" name="username"/>
-								<label class="login-field-icon fui-user" for="login-name"></label>
-							</div>
+            <form action="logIn" method="post">
+                <div class="login-form">
+                    <div class="form-group">
+                        <input type="text" class="form-control login-field" placeholder="Username" id="login-usr"
+                               name="username"/>
+                    </div>
 
-							<div class="form-group">
-								<input type="password" class="form-control login-field" placeholder="Password" id="login-pwd" name="password"/>
-								<label class="login-field-icon fui-lock" for="login-pass"></label>
-							</div>
+                    <div class="form-group">
+                        <input type="password" class="form-control login-field" placeholder="Password" id="login-pwd"
+                               name="password"/>
+                    </div>
 
-							<a class="btn btn-primary btn-lg btn-block" href="#">Log in</a>
-							<a class="login-link" href="#">Just a guester.</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
+                    <a class="login-link" href="#">Just a guester.</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-		<script th:src="@{js/jquery-3.2.1.js}"></script>
-	</body>
+<script th:src="@{js/jquery-3.2.1.js}"></script>
+<script>
+    $(document).ready(function(){
+        var errorCode = $("#code").val();
+        console.log(errorCode);
+        if(errorCode == 1){
+            alert("Please enter the USERNAME and PASSWORD");
+        } else if(errorCode == 2){
+            alert("can't match the USERNAME or PASSWORD");
+        } else {
+            console.log("yes~");
+        }
+    });
+</script>
+</body>
 
 </html>
