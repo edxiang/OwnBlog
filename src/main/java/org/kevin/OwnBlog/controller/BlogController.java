@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,6 +24,14 @@ public class BlogController {
     private BlogService blogService;
     @Autowired
     private CommentService commentService;
+
+    @RequestMapping("/blogs")
+    public String blogs(ModelMap map) {
+        List<Blog> blogs = blogService.findAll();
+        Collections.reverse(blogs);
+        map.addAttribute("blogs", blogs);
+        return "blogs";
+    }
 
     @RequestMapping(value = "/blogs/essay", method = RequestMethod.POST)
     public String newBlog(Blog blog, ModelMap model) {
