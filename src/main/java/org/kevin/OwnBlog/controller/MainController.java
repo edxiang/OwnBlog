@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -28,18 +29,22 @@ public class MainController {
     private CommentService commentService;
 
     @RequestMapping("/")
-    public String mainPage() {
+    public String mainPage(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Object obj = session.getAttribute("login");
+        if(obj != null && (boolean)obj)
+            return "main2";
         return "login";
     }
 
     @RequestMapping("/login")
-    public String login(ModelMap map){
+    public String login(HttpServletRequest request, ModelMap map){
         map.addAttribute("errorCode","0");
         return "login";
     }
 
-    @RequestMapping(value = "/logIn", method = RequestMethod.POST)
-    public String logIn(HttpServletRequest request,ModelMap map){
+    @RequestMapping(value = "/index", method = RequestMethod.POST)
+    public String index(HttpServletRequest request,ModelMap map){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if(username == null || password == null){
