@@ -54,10 +54,11 @@ public class TwitterService {
             public Predicate toPredicate(Root<Twitter> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<>();
                 if(twitterCriteria.getFromDate() != null){
-                    list.add(criteriaBuilder.equal(root.get("createTime").as(Date.class), twitterCriteria.getFromDate()));
+                    //list.add(criteriaBuilder.equal(root.get("createTime").as(Date.class), twitterCriteria.getFromDate()));
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), twitterCriteria.getFromDate());
                 }
                 if(twitterCriteria.getToDate() != null){
-                    list.add(criteriaBuilder.equal(root.get("createTime").as(Date.class), twitterCriteria.getToDate()));
+                    list.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), twitterCriteria.getToDate()));
                 }
                 Predicate[] p = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(p));

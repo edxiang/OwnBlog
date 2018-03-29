@@ -45,6 +45,7 @@ public class BlogController {
 
     @RequestMapping(value = "/blogs/blog")
     public String blog(long id, ModelMap map){
+
         Blog blog = blogService.findById(id);
         List<Comment> commentList = commentService.findByLinkIdAndType(id,1);
         map.addAttribute("blog",blog);

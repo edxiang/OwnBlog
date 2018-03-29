@@ -29,12 +29,8 @@ public class MainController {
     private CommentService commentService;
 
     @RequestMapping("/")
-    public String mainPage(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Object obj = session.getAttribute("login");
-        if(obj != null && (boolean)obj)
-            return "main2";
-        return "login";
+    public String mainPage() {
+        return "main2";
     }
 
     @RequestMapping("/login")

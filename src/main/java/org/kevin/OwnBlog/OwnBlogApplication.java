@@ -10,18 +10,18 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class OwnBlogApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(OwnBlogApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OwnBlogApplication.class, args);
+    }
 
-	@Bean
-    public TomcatEmbeddedServletContainerFactory tomcatEmbedded(){
-	    TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-	    tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector ->{
-	        if((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)){
-                ((AbstractHttp11Protocol<?>)connector.getProtocolHandler()).setMaxSwallowSize(-1);
+    @Bean
+    public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
+        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
+        tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> {
+            if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
+                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
             }
         });
-	    return tomcat;
+        return tomcat;
     }
 }
