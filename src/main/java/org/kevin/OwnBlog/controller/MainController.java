@@ -29,7 +29,12 @@ public class MainController {
     private CommentService commentService;
 
     @RequestMapping("/")
-    public String mainPage() {
+    public String toLogin() {
+        return "redirect:login";
+    }
+
+    @RequestMapping("coverPage")
+    public String coverPage(){
         return "main2";
     }
 
