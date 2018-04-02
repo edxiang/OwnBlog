@@ -45,7 +45,7 @@ public class Tester {
         Page<Twitter> pageable = twitterService.findTwitterCriteria(page,size,criteria);
         Iterator<Twitter> ts = pageable.iterator();
         while(ts.hasNext()){
-            Twitter t= ts.next();
+            Twitter t = ts.next();
             System.out.println(t.getId());
         }*/
         System.out.println(twitterService.count());
