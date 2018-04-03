@@ -45,7 +45,7 @@ public class TwitterController {
         map.addAttribute("twitters", twitterPage);
         map.addAttribute("pages", pageList);
         map.addAttribute("currentPage",page);
-        map.addAttribute("last",pageList.size());
+        map.addAttribute("last",pageList.size() - 1);
 
         Object obj = request.getSession().getAttribute("login");
         if(obj != null && (Boolean)obj){
