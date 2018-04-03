@@ -34,30 +34,30 @@ public class MainController {
     }
 
     @RequestMapping("coverPage")
-    public String coverPage(){
+    public String coverPage() {
         return "main2";
     }
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request, ModelMap map){
-        map.addAttribute("errorCode","0");
+    public String login(HttpServletRequest request, ModelMap map) {
+        map.addAttribute("errorCode", "0");
         return "login";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.POST)
-    public String index(HttpServletRequest request,ModelMap map){
+    public String index(HttpServletRequest request, ModelMap map) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        if(username == null || password == null){
-            map.addAttribute("errorCode","1");
-            request.getSession().setAttribute("login",false);
+        if (username == null || password == null) {
+            map.addAttribute("errorCode", "1");
+            request.getSession().setAttribute("login", false);
             return "login";
-        } else if(!username.equals("edxiao1993") || !password.equals("0322")){
-            map.addAttribute("errorCode","2");
-            request.getSession().setAttribute("login",false);
+        } else if (!username.equals("edxiao1993") || !password.equals("0322")) {
+            map.addAttribute("errorCode", "2");
+            request.getSession().setAttribute("login", false);
             return "login";
         } else {
-            request.getSession().setAttribute("login",true);
+            request.getSession().setAttribute("login", true);
             return "main2";
         }
     }

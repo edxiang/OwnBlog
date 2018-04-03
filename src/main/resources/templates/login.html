@@ -7,6 +7,7 @@
     <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
     <link th:href="@{css/flat-ui.css}" rel="stylesheet"/>
     <link th:href="@{css/demo.css}" rel="stylesheet"/>
+
 </head>
 
 <body>
@@ -33,6 +34,8 @@
                                name="password"/>
                     </div>
 
+                    <p style="display: none;color: darkred;font-size: 14px;" id="errorMsg">check your Username||Password</p>
+
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
                     <a class="login-link" href="mainPage" th:href="@{/coverPage}">Just a guester.</a>
                 </div>
@@ -42,14 +45,16 @@
 </div>
 
 <script th:src="@{js/jquery-3.2.1.js}"></script>
+<script th:src="@{js/layer/layer.js}"></script>
 <script>
     $(document).ready(function(){
         var errorCode = $("#code").val();
-        console.log(errorCode);
         if(errorCode == 1){
-            alert("Please enter the USERNAME and PASSWORD");
+            $("#errorMsg").text("please enter the USERNAME or PASSWORD");
+            $("#errorMsg").show();
         } else if(errorCode == 2){
-            alert("can't match the USERNAME or PASSWORD");
+            $("#errorMsg").text("can't match the USERNAME or PASSWORD");
+            $("#errorMsg").show();
         }
     });
 </script>

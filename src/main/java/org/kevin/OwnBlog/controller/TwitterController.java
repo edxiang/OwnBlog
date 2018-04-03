@@ -42,12 +42,15 @@ public class TwitterController {
         TwitterCriteria criteria = new TwitterCriteria();
         Page<Twitter> twitterPage = twitterService.findTwitterCriteria(page, SIZE, criteria);
 
-        /*List<Twitter> twitters = twitterService.findAll();
-        Collections.reverse(twitters);*/
         map.addAttribute("twitters", twitterPage);
         map.addAttribute("pages", pageList);
         map.addAttribute("currentPage",page);
         map.addAttribute("last",pageList.size());
+
+        Object obj = request.getSession().getAttribute("login");
+        if(obj != null && (Boolean)obj){
+            map.addAttribute("login",true);
+        }
         return "twitters";
     }
 

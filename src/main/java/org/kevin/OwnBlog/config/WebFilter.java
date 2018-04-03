@@ -26,7 +26,7 @@ public class WebFilter {
     public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new MyFilter());
-        registration.addUrlPatterns("/addBlog","");
+        registration.addUrlPatterns("/*");
         registration.addInitParameter("paramName", "paramValue");
         registration.setName("MyFilter");
         registration.setOrder(1);
@@ -42,15 +42,19 @@ public class WebFilter {
         public void doFilter(ServletRequest sRequest, ServletResponse sResponse, FilterChain filterChain)
                 throws IOException, ServletException {
             HttpServletRequest request = (HttpServletRequest) sRequest;
-            HttpSession session = request.getSession();
-            Object obj = session.getAttribute("login");
-            if (obj != null && (boolean) obj) {
-                filterChain.doFilter(sRequest, sResponse);
-            } else {
-                HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) sResponse);
-                System.err.println("no login");
-                wrapper.sendRedirect("/login");
+
+            String url = request.getRequestURI();
+            if(url.contains("addblog")) {
+                HttpSession session = request.getSession();
+                Object obj = session.getAttribute("login");
+                if (obj != null && (boolean) obj) {
+                    filterChain.doFilter(sRequest, sResponse);
+                } else {
+                    HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) sResponse);
+                    wrapper.sendRedirect("/login");
+                }
             }
+            filterChain.doFilter(sRequest, sResponse);
         }
 
         @Override
