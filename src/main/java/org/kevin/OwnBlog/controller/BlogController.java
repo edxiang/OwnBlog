@@ -30,24 +30,11 @@ public class BlogController {
 
     @RequestMapping("/blogs")
     public String blogs(ModelMap map) {
-        List<Blog> blogs = blogService.findAll();
-        Collections.reverse(blogs);
-
-        List<Long> blogIds = new ArrayList<>();
-        Map<Long, Blog> blogMap = new HashMap<>();
-        for (Blog b : blogs) {
-            blogIds.add(b.getId());
-            blogMap.put(b.getId(), b);
+        if (!redisTemplate.hasKey("blogs")) {
+            redisOperation(null);
         }
-        if (redisTemplate.hasKey("blogIds")) {
-            redisTemplate.delete("blogIds");
-            redisTemplate.delete("blogMap");
-        }
-        ValueOperations<String, List> idValue = redisTemplate.opsForValue();
-        idValue.set("blogIds", blogIds);
-        ValueOperations<String, Map> blogValue = redisTemplate.opsForValue();
-        blogValue.set("blogMap", blogMap);
 
+        List<Blog> blogs = (List) redisTemplate.opsForValue().get("blogs");
         map.addAttribute("blogs", blogs);
         return "blogs";
     }
@@ -59,14 +46,28 @@ public class BlogController {
         String foreword = Utils.replaceLineCharacter(blog.getForeword());
         blog.setForeword(foreword);
         blogService.save(blog);
+        redisOperation(blog);
         return "redirect:../blogs";
     }
 
     @RequestMapping(value = "/blogs/blog")
     public String blog(Long id, ModelMap map) {
-        Map<String,Blog> blogMap = (Map)(redisTemplate.opsForValue().get("blogMap"));
-        Blog b = blogMap.get(id+"");
-        //Blog blog = blogService.findById(id);
+        List<Blog> blogs = (List) redisTemplate.opsForValue().get("blogs");
+        Blog b = null;
+        for (Blog blog : blogs) {
+            if (blog.getId().equals(id)) {
+                b = blog;
+                break;
+            }
+        }
+        int index = blogs.indexOf(b);
+        if (index - 1 >= 0) {
+            map.addAttribute("previous", blogs.get(index - 1).getId());
+        }
+        if (index + 1 < blogs.size()) {
+            map.addAttribute("next", blogs.get(index + 1).getId());
+        }
+
         List<Comment> commentList = commentService.findByLinkIdAndType(id, 1);
         map.addAttribute("blog", b);
         map.addAttribute("commentList", commentList);
@@ -88,7 +89,15 @@ public class BlogController {
         return "redirect:/blogs/blog?id=" + id;
     }
 
-    private void redisOperation(){
+    private void redisOperation(Blog blog) {
+        List<Blog> blogs = (List) redisTemplate.opsForValue().get("blogs");
+        blogs.add(0,blog);
 
+        if (redisTemplate.hasKey("blogs")) {
+            redisTemplate.delete("blogs");
+        }
+
+        ValueOperations<String, List> blogRedis = redisTemplate.opsForValue();
+        blogRedis.set("blogs", blogs);
     }
 }

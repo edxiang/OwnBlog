@@ -1,86 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="utf-8"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<meta name="description" content=""/>
-		<meta name="author" content=""/>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
-		<title>Kevin.Z</title>
+    <title>Kevin.Z</title>
 
-		<link th:href="@{css/bootstrap.css}" rel="stylesheet" />
-		<link th:href="@{css/cover.css}" rel="stylesheet" />
+    <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{css/cover.css}" rel="stylesheet"/>
 
-	</head>
+</head>
 
-	<body>
+<body>
 
-		<div class="site-wrapper">
-			<div class="site-wrapper-inner">
-				<div class="cover-container">
-					<div class="masthead clearfix">
-						<div class="inner">
-							<h3 class="masthead-brand">KEVIN's BLOG</h3>
-							<nav>
-								<ul class="nav masthead-nav">
-									<li class="active">
-										<a href="#" th:href="#{/}">Home</a>
-									</li>
-									<li>
-										<a href="blogs" th:href="@{/blogs}">Essay</a>
-									</li>
-									<li>
-										<a href="album" th:href="@{/albums}">Gallery</a>
-									</li>
-                                    <li>
-                                        <a href="twitters" th:href="@{/twitters}">Twitter</a>
-                                    </li>
-                                    <li>
-                                        <a href="translation" th:href="@{/translation}">育嘉的病</a>
-                                    </li>
-								</ul>
-							</nav>
-						</div>
-					</div>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <div class="masthead clearfix">
+                <div class="inner">
+                    <h3 class="masthead-brand">KEVIN's BLOG</h3>
+                    <nav>
+                        <ul class="nav masthead-nav">
+                            <li class="active">
+                                <a href="#" th:href="#{/}">Home</a>
+                            </li>
+                            <li>
+                                <a href="blogs" th:href="@{/blogs}">Essay</a>
+                            </li>
+                            <li>
+                                <a href="album" th:href="@{/albums}">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="twitters" th:href="@{/twitters}">Twitter</a>
+                            </li>
+                            <li>
+                                <a href="translation" th:href="@{/translation}">育嘉的病</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
 
-					<div class="inner cover">
-						<h1 class="cover-heading">Welcome come to my Blog!</h1>
-						<p class="lead">This is the blog that I write for myself as the Cloud Server still has a lot of storage.</p>
-						<p class="lead">Anyway, I hope you can enjoy your travel during explore my blog.</p>
-						<!--<p class="lead">
-							<a href="#" class="btn btn-lg btn-default">Learn more</a>
-						</p>-->
-					</div>
+            <div class="inner cover">
+                <h1 class="cover-heading">Welcome come to my Blog!</h1>
+                <p class="lead">This is the blog that I write for myself as the Cloud Server still has a lot of
+                    storage.</p>
+                <p class="lead">Anyway, I hope you can enjoy your travel during explore my blog.</p>
+                <!--<p class="lead">
+                    <a href="#" class="btn btn-lg btn-default">Learn more</a>
+                </p>-->
+            </div>
 
-					<div class="mastfoot">
-						<div class="inner">
-							<p>Contact Me:
-								<a href="javascript:void(0);" id="contactLink">edXiao1993 (WeChat).</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
+            <div class="mastfoot">
+                <div class="inner">
+                    <p>Contact Me:
+                        <a href="javascript:void(0);" id="contactLink">edXiao1993 (WeChat).</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		</div>
+</div>
 
-		<script th:src="@{js/jquery-3.2.1.js}"></script>
-		<script th:src="@{js/bootstrap.js}"></script>
-		<script th:src="@{js/layer/layer.js}"></script>
-		
-		<script>
-			$("#contactLink").bind('click',function(){
-				layer.open({
-					title: "my QR code from WeChat.",
-					type: 1,
-					area: ['25%', '60%'],
-					content:'<img src="img/myWeChat.jpg" />'
-				});
-			});
-		</script>
-		
-		
-	</body>
+<script th:src="@{js/jquery-3.2.1.js}"></script>
+<script th:src="@{js/bootstrap.js}"></script>
+<script th:src="@{js/layer/layer.js}"></script>
+
+<script>
+    $("#contactLink").bind('click', function () {
+        layer.open({
+            title: "my QR code from WeChat.",
+            type: 1,
+            area: ['400px', '570px'],
+            content: '<img src="img/myWeChat.jpg" />'
+        });
+    });
+</script>
+
+
+</body>
 
 </html>

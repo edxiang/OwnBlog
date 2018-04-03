@@ -25,7 +25,7 @@
 <div class="blog-masthead">
     <div class="container">
         <nav class="blog-nav">
-            <a class="blog-nav-item" th:href="@{/index}">Home</a>
+            <a class="blog-nav-item" th:href="@{/}">Home</a>
             <a class="blog-nav-item" th:href="@{/blogs}">Blogs</a>
         </nav>
     </div>
@@ -48,8 +48,8 @@
 
             <nav>
                 <ul class="pager">
-                    <li><a href="#">Previous</a></li>
-                    <li><a href="#">Next</a></li>
+                    <li th:if="${previous}" class="previous"><a href="#" th:href="@{/blogs/blog(id=${previous})}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li th:if="${next}" class="next"><a href="#" th:href="@{/blogs/blog(id=${next})}">Next <span aria-hidden="true">&rarr;</span></a></li>
                 </ul>
             </nav>
             <hr class="featurette-divider"/>

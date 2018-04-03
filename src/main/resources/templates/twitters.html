@@ -24,6 +24,10 @@
             line-height: 0;
             z-index: 100;
         }
+
+        .forLi{
+            /*margin:inherit;*/
+        }
     </style>
 </head>
 
@@ -47,13 +51,29 @@
             </div>
         </div>
     </div>
+    <nav aria-label="Page navigation">
+        <input type="hidden" value="currentPage" id="currentPage" th:value="${currentPage}" />
+        <ul class="pagination pagination-lg">
+            <li>
+                <a th:href="@{twitters(page=0)}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="p,iterStat:${pages}" class="forLi"><a href="toPage" th:href="@{twitters(page=${p})}" th:text="${p}">page number</a></li>
+            <li>
+                <a href="#" th:href="@{twitters(page=${last})}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <hr class="featurette-divider"/>
 </div>
 
 <div class="container">
     <footer>
         <p>
-            <a href="main2.html" th:href="@{/index}">Back to Home</a>
+            <a href="main2.html" th:href="@{/}">Back to Home</a>
         </p>
     </footer>
 </div>
@@ -98,6 +118,16 @@
                 area: ['450px', '230px'],
                 content: $("#addTwitters")
             });
+        });
+
+        var currentPage = $("#currentPage").val();
+        console.log("this is current page" + currentPage);
+        var objs = $(".forLi");
+        $.each(objs,function(i){
+            if(i == currentPage){
+                $(this).addClass("active");
+                return;
+            }
         });
     });
 </script>
