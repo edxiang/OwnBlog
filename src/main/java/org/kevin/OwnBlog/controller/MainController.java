@@ -40,6 +40,10 @@ public class MainController {
 
     @RequestMapping("/login")
     public String login(HttpServletRequest request, ModelMap map) {
+        Object obj = request.getSession().getAttribute("login");
+        if(obj != null && (Boolean)obj){
+            return "redirect:coverPage";
+        }
         map.addAttribute("errorCode", "0");
         return "login";
     }
