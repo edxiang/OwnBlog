@@ -18,15 +18,7 @@ import java.util.List;
 @Controller
 public class MainController {
     @Autowired
-    private BlogService blogService;
-    @Autowired
     private AlbumService albumService;
-    @Autowired
-    private TwitterService twitterService;
-    @Autowired
-    private TranslationService translationService;
-    @Autowired
-    private CommentService commentService;
 
     @RequestMapping("/")
     public String toLogin() {
@@ -41,7 +33,7 @@ public class MainController {
     @RequestMapping("/login")
     public String login(HttpServletRequest request, ModelMap map) {
         Object obj = request.getSession().getAttribute("login");
-        if(obj != null && (Boolean)obj){
+        if (obj != null && (Boolean) obj) {
             return "redirect:coverPage";
         }
         map.addAttribute("errorCode", "0");
@@ -61,6 +53,7 @@ public class MainController {
             request.getSession().setAttribute("login", false);
             return "login";
         } else {
+            request.getSession().setMaxInactiveInterval(60 * 60 * 12);
             request.getSession().setAttribute("login", true);
             return "main2";
         }

@@ -92,8 +92,8 @@
                 <div class="col-sm-6" style="margin-right:10px;">
                     <label for="twitter">what's up now:</label>
                 </div>
-                <div class="col-sm-10">
-                    <textarea id="twitter" rows="3" class="form-control" name="twitter"></textarea>
+                <div class="col-sm-12">
+                    <textarea id="twitter" rows="5" class="form-control" name="twitter"></textarea>
                 </div>
             </div>
             <p class="text-center" style="margin-top:10px;clear: both;">
@@ -110,18 +110,21 @@
 <script th:src="@{js/layer/layer.js}"></script>
 <script>
     $().ready(function () {
+        var h = $(window).height();
+        var line = h / 100;
+        var w = $(window).width();
+        console.log(h + "_" + w);
         $("#newTwitter").bind('click', function () {
             layer.open({
                 type: 1,
                 title: 'New Twitter',
                 skin: 'layui-layer-rim',
-                area: ['450px', '230px'],
+                area: ['450px', '275px'],
                 content: $("#addTwitters")
             });
         });
 
         var currentPage = $("#currentPage").val();
-        console.log("this is current page" + currentPage);
         var objs = $(".forLi");
         $.each(objs, function (i) {
             if (i == currentPage) {
