@@ -25,7 +25,7 @@ public class MainController {
         return "redirect:login";
     }
 
-    @RequestMapping("coverPage")
+    @RequestMapping("/coverPage")
     public String coverPage() {
         return "main2";
     }

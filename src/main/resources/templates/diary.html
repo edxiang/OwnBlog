@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Twitters</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{css/theme.css}" rel="stylesheet"/>
+
+    <style>
+        .t {
+            width: 66px;
+            position: fixed;
+            bottom: 40px;
+            right: 12.5%;
+            font-size: 0;
+            line-height: 0;
+            z-index: 100;
+        }
+
+        .forLi {
+            /*margin:inherit;*/
+        }
+
+        .margin5{
+            margin:7px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container theme-showcase">
+    <div class="jumbotron" style="margin-top:5%;">
+        <h1>This is the my Twitters</h1>
+        <p>If you don't like it, there is nothing I can do. hhh</p>
+    </div>
+
+    <div class="page-header">
+        <h1>real-time moods</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-10" th:each="t,iterStat:${twitters}">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="${t.createTime}">the creation time</h3>
+                </div>
+                <div class="panel-body" th:utext="${t.twitter}">the content</div>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="Page navigation">
+        <input type="hidden" value="currentPage" id="currentPage" th:value="${currentPage}"/>
+        <ul class="pagination pagination-lg">
+            <li>
+                <a th:href="@{twitters(page=0)}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="p,iterStat:${pages}" class="forLi"><a href="toPage" th:href="@{twitters(page=${p})}"
+                                                               th:text="${p}">page number</a></li>
+            <li>
+                <a href="#" th:href="@{twitters(page=${last})}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <hr class="featurette-divider"/>
+</div>
+
+<div class="container">
+    <footer>
+        <p>
+            <a href="main2.html" th:href="@{/}">Back to Home</a>
+        </p>
+    </footer>
+</div>
+
+<div class="t" th:if="${login}">
+    <a href="javascript:void(0);">
+        <img id="newDiary" th:src="@{img/twitter.png}" alt="Generic placeholder image" width="75" height="75"/>
+    </a>
+</div>
+
+<div style="display:none" id="addDiary">
+    <div class="container" style="width:380px;">
+        <form action="/diary/items" method="post">
+            <div class="row" style="margin-top:10px;">
+                <div class="col-sm-12" style="margin-right:10px;">
+                    <label for="">plan to do:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <span id="adding" class="btn btn-sm btn-info pull-right col-sm-3">add item</span>
+                </div>
+                <div class="input-group col-sm-12 margin5">
+                    <span class="input-group-addon" id="basic-addon1">1</span>
+                    <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
+                           name="item1"/>
+                </div>
+                <div class="input-group col-sm-12 margin5">
+                    <span class="input-group-addon" id="basic-addon2">2</span>
+                    <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
+                           name="item2"/>
+                </div>
+                <div class="input-group col-sm-12 margin5">
+                    <span class="input-group-addon" id="basic-addon3">3</span>
+                    <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
+                           name="item3"/>
+                </div>
+            </div>
+            <p class="text-center" style="margin-top:10px;clear: both;">
+                <button type="submit" class="btn btn-lg btn-primary">Upload</button>
+            </p>
+        </form>
+    </div>
+</div>
+
+
+<script th:src="@{js/jquery-3.2.1.js}"></script>
+<script th:src="@{js/bootstrap.js}"></script>
+<script th:src="@{js/holder.min.js}"></script>
+<script th:src="@{js/layer/layer.js}"></script>
+<script>
+    var index = 3;
+    $().ready(function () {
+        var h = $(window).height();
+        var line = h / 100;
+        var w = $(window).width();
+        $("#newDiary").bind('click', function () {
+            layer.open({
+                type: 1,
+                title: 'New Twitter',
+                skin: 'layui-layer-rim',
+                area: ['450px', '400px'],
+                content: $("#addDiary")
+            });
+        });
+
+        var currentPage = $("#currentPage").val();
+        var objs = $(".forLi");
+        $.each(objs, function (i) {
+            if (i == currentPage) {
+                $(this).addClass("active");
+                return;
+            }
+        });
+    });
+
+    $("#adding").bind('click',function(){
+        index++;
+        var div = $('<div class="input-group col-sm-12 margin5"></div>');
+        var itemSpan = $('<span class="input-group-addon" id="basic-addon' + index + '">' + index + '</span>');
+        var itemInput = $('<input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1" name="item'+ index + '"/>');
+        div.append(itemSpan);
+        div.append(itemInput);
+        var list = $(".col-sm-12");
+        div.insertAfter(list[list.length - 1]);
+    });
+</script>
+</body>
+
+</html>

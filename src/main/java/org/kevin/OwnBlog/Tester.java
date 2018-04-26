@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.TimeZone;
@@ -60,6 +61,12 @@ public class Tester {
     public void t1(){
         stringRedisTemplate.opsForValue().set("aaa","111");
         System.out.println(stringRedisTemplate.opsForValue().get("aaa"));
+    }
+
+    @Test
+    public void testTime(){
+        System.out.println(Utils.getGTM8());
+        System.out.println(LocalDateTime.now());
     }
 
 }
