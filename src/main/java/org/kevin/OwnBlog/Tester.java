@@ -3,9 +3,11 @@ package org.kevin.OwnBlog;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kevin.OwnBlog.model.Album;
+import org.kevin.OwnBlog.model.Diary;
 import org.kevin.OwnBlog.model.Twitter;
 import org.kevin.OwnBlog.model.TwitterCriteria;
 import org.kevin.OwnBlog.service.AlbumService;
+import org.kevin.OwnBlog.service.DiaryService;
 import org.kevin.OwnBlog.service.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -67,6 +69,20 @@ public class Tester {
     public void testTime(){
         System.out.println(Utils.getGTM8());
         System.out.println(LocalDateTime.now());
+    }
+
+    @Autowired
+    private DiaryService diaryService;
+    @Test
+    public void testDiary(){
+        Diary d = new Diary();
+        d.setItem("damn it");
+        d.setNote("note");
+        d.setStatus(true);
+        diaryService.save(d);
+
+        Diary diary = diaryService.findById(6L);
+        System.out.println(diary.getStatus());
     }
 
 }

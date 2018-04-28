@@ -8,7 +8,7 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
 
-    <title>Twitters</title>
+    <title>Diary</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
@@ -38,40 +38,21 @@
 <body>
 <div class="container theme-showcase">
     <div class="jumbotron" style="margin-top:5%;">
-        <h1>This is the my Twitters</h1>
-        <p>If you don't like it, there is nothing I can do. hhh</p>
+        <h1>MUST TO BE DONE</h1>
+        <p>Wait till have some proper words...</p>
     </div>
 
-    <div class="page-header">
-        <h1>real-time moods</h1>
-    </div>
+    <hr class="featurette-divider"/>
     <div class="row">
-        <div class="col-sm-10" th:each="t,iterStat:${twitters}">
+        <div class="col-sm-10" th:each="d,iterStat:${diaries}">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title" th:text="${t.createTime}">the creation time</h3>
+                    <h3 class="panel-title" th:text="${d.createTime}">the creation time</h3>
                 </div>
-                <div class="panel-body" th:utext="${t.twitter}">the content</div>
+                <div class="panel-body" th:utext="${d.item}">the content</div>
             </div>
         </div>
     </div>
-    <nav aria-label="Page navigation">
-        <input type="hidden" value="currentPage" id="currentPage" th:value="${currentPage}"/>
-        <ul class="pagination pagination-lg">
-            <li>
-                <a th:href="@{twitters(page=0)}" aria-label="First">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li th:each="p,iterStat:${pages}" class="forLi"><a href="toPage" th:href="@{twitters(page=${p})}"
-                                                               th:text="${p}">page number</a></li>
-            <li>
-                <a href="#" th:href="@{twitters(page=${last})}" aria-label="Last">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
     <hr class="featurette-divider"/>
 </div>
 
@@ -128,13 +109,10 @@
 <script>
     var index = 3;
     $().ready(function () {
-        var h = $(window).height();
-        var line = h / 100;
-        var w = $(window).width();
         $("#newDiary").bind('click', function () {
             layer.open({
                 type: 1,
-                title: 'New Twitter',
+                title: 'To-Do-List',
                 skin: 'layui-layer-rim',
                 area: ['450px', '400px'],
                 content: $("#addDiary")
