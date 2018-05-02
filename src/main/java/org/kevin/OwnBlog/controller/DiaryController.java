@@ -8,10 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 /**
  * Created by Kevin.Z on 2018/4/26.
@@ -27,9 +29,24 @@ public class DiaryController {
         if(obj != null && (Boolean)obj){
             map.addAttribute("login",true);
         }
-        Page<Diary> page = diaryService.findDiaryCriteria(0,10,new DiaryCriteria());
-        map.addAttribute("diaries",page);
+        DiaryCriteria dc = new DiaryCriteria();
+        List<Diary> list = diaryService.findByCreateTimeBetween(dc.getBeginTimeOfDay(),dc.getEndTimeOfDay());
+        //Page<Diary> page = diaryService.findDiaryCriteria(0,10, dc);
+        map.addAttribute("diaries",list);
         return "diary";
+    }
+
+    @RequestMapping(value = "/diary/update", method = RequestMethod.POST)
+    public String Update(HttpServletRequest request){
+        String id = request.getParameter("id");
+        Diary diary = diaryService.findById(Long.parseLong(id));
+        String note = request.getParameter("note");
+        diary.setNote(note);
+        String checked = request.getParameter("checked");
+        if(checked != null)
+            diary.setStatus(true);
+        diaryService.save(diary);
+        return "redirect:../diary";
     }
 
     @RequestMapping("/diary/items")

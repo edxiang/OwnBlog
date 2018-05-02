@@ -32,6 +32,10 @@
         .margin5{
             margin:7px;
         }
+
+        .borderBottem{
+            border-bottom: dashed black 1px;
+        }
     </style>
 </head>
 
@@ -42,18 +46,52 @@
         <p>Wait till have some proper words...</p>
     </div>
 
-    <hr class="featurette-divider"/>
-    <div class="row">
-        <div class="col-sm-10" th:each="d,iterStat:${diaries}">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title" th:text="${d.createTime}">the creation time</h3>
-                </div>
-                <div class="panel-body" th:utext="${d.item}">the content</div>
+    <form class="form-horizontal" action="/diary/update" method="post" th:each="d,iterStat:${diaries}">
+        <input type="hidden" value="id" name="id" th:value="${d.id}" />
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label th:text="' * ' +  ${d.item}">diary works</label>
             </div>
         </div>
-    </div>
-    <hr class="featurette-divider"/>
+        <div class="form-group">
+            <div class="col-sm-8">
+                <input class="form-control" type="text" name="note" placeholder="Note" th:unless="${d.status}"/>
+                <input class="form-control" type="text" readonly="readonly" th:value="${d.note}" th:if="${d.status}"/>
+            </div>
+            <div class="checkbox col-sm-4">
+                <input type="checkbox" th:unless="${d.status}" name="checked" th:text="finish"/>
+                <input type="checkbox" checked="checked" disabled="disabled" th:if="${d.status}"/>finish
+            </div>
+        </div>
+        <div class="from-group" th:unless="${d.status}">
+            &nbsp;
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+        <hr class="featurette-divider"/>
+    </form>
+
+    <!--<form class="form-horizontal" action="/diary/update">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label>123</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-8">
+                <input class="form-control" type="text" placeholder="Note" readonly="readonly" value="hello world!"/>
+            </div>
+            <div class="checkbox col-sm-4">
+                <input type="checkbox" id="checkbox" checked="checked" disabled="disabled"/>finish
+            </div>
+        </div>
+        <div class="from-group">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary" disabled="disabled">Submit</button>
+            </div>
+        </div>
+    </form>-->
 </div>
 
 <div class="container">
@@ -114,7 +152,7 @@
                 type: 1,
                 title: 'To-Do-List',
                 skin: 'layui-layer-rim',
-                area: ['450px', '400px'],
+                area: ['420px', '400px'],
                 content: $("#addDiary")
             });
         });

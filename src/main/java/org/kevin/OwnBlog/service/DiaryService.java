@@ -43,20 +43,27 @@ public class DiaryService {
         diaryRepository.delete(diary);
     }
 
+    public List<Diary> findByCreateTimeBetween(Date beginDate, Date endDate){
+        return diaryRepository.findByCreateTimeBetween(beginDate,endDate);
+    }
+
     public long count() {
         return diaryRepository.count();
     }
 
     public Page<Diary> findDiaryCriteria(int page, int size, final DiaryCriteria diaryCriteria) {
+        // can't split the data.
         Pageable pageable = new PageRequest(page, size, Sort.Direction.DESC, "id");
         Page<Diary> diaryPage = diaryRepository.findAll(new Specification<Diary>() {
             @Override
             public Predicate toPredicate(Root<Diary> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<>();
                 if (diaryCriteria.getBeginTimeOfDay() != null) {
+                    System.out.println(diaryCriteria.getBeginTimeOfDay());
                     criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), diaryCriteria.getBeginTimeOfDay());
                 }
-                if (diaryCriteria.getBeginTimeOfDay() != null) {
+                if (diaryCriteria.getEndTimeOfDay() != null) {
+                    System.out.println(diaryCriteria.getEndTimeOfDay());
                     criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), diaryCriteria.getEndTimeOfDay());
                 }
                 Predicate[] p = new Predicate[list.size()];
