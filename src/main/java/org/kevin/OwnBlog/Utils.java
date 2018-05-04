@@ -1,5 +1,6 @@
 package org.kevin.OwnBlog;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -33,6 +34,16 @@ public class Utils {
         Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
         java.util.Date date = Date.from(instant);
         return date;
+    }
+
+    public static Date StringToDate(String stringDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(stringDate);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String replaceLineCharacter(String text) {

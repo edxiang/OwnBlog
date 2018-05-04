@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface DiaryRepository extends JpaRepository<Diary,Long>, JpaSpecificationExecutor<Diary> {
     Diary findById(Long id);
-    List<Diary> findByCreateTimeBetween(Date beginDate, Date endDate);
+    List<Diary> findByForTimeBetween(Date beginDate, Date endDate);
 }

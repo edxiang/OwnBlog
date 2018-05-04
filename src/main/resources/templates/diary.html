@@ -46,7 +46,6 @@
         <h1>MUST TO BE DONE</h1>
         <p>Wait till have some proper words...</p>
     </div>
-
     <form class="form-horizontal" action="/diary/update" method="post" th:each="d,iterStat:${diaries}">
         <input type="hidden" value="id" name="id" th:value="${d.id}" />
         <div class="form-group">
@@ -56,15 +55,16 @@
         </div>
         <div class="form-group">
             <div class="col-sm-8">
-                <input class="form-control" type="text" name="note" placeholder="Note" th:unless="${d.status}"/>
+                <input class="form-control" type="text" name="note" placeholder="Note" th:value="${d.note}" th:unless="${d.status}"/>
                 <input class="form-control" type="text" readonly="readonly" th:value="${d.note}" th:if="${d.status}"/>
             </div>
-            <div class="checkbox col-sm-4">
+            <div class="checkbox col-sm-2">
+                &nbsp;&nbsp;&nbsp;
                 <input type="checkbox" th:unless="${d.status}" name="checked" th:text="finish"/>
-                <input type="checkbox" checked="checked" disabled="disabled" th:if="${d.status}"/>finish
+                <input type="checkbox" checked="checked" disabled="disabled" th:if="${d.status}" th:text="finish"/>
             </div>
         </div>
-        <div class="from-group" th:unless="${d.status}">
+        <div class="from-group" th:unless="${d.status}" style="clear: both;">
             &nbsp;
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -72,27 +72,6 @@
         </div>
         <hr class="featurette-divider"/>
     </form>
-
-    <!--<form class="form-horizontal" action="/diary/update">
-        <div class="form-group">
-            <div class="col-sm-12">
-                <label>123</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-8">
-                <input class="form-control" type="text" placeholder="Note" readonly="readonly" value="hello world!"/>
-            </div>
-            <div class="checkbox col-sm-4">
-                <input type="checkbox" id="checkbox" checked="checked" disabled="disabled"/>finish
-            </div>
-        </div>
-        <div class="from-group">
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" disabled="disabled">Submit</button>
-            </div>
-        </div>
-    </form>-->
 </div>
 
 <div class="container">
@@ -117,17 +96,17 @@
                     <label for="">plan to do:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <span id="adding" class="btn btn-sm btn-info pull-right col-sm-3">add item</span>
                 </div>
-                <div class="input-group col-sm-12 margin5">
+                <div class="input-group col-sm-11 margin5">
                     <span class="input-group-addon" id="basic-addon1">1</span>
                     <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
                            name="item1"/>
                 </div>
-                <div class="input-group col-sm-12 margin5">
+                <div class="input-group col-sm-11 margin5">
                     <span class="input-group-addon" id="basic-addon2">2</span>
                     <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
                            name="item2"/>
                 </div>
-                <div class="input-group col-sm-12 margin5">
+                <div class="input-group col-sm-11 margin5">
                     <span class="input-group-addon" id="basic-addon3">3</span>
                     <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
                            name="item3"/>
@@ -135,11 +114,10 @@
             </div>
             <p class="">
                 <label for="datepicker">pick up a date:</label>
-                <input type="text" id="datepicker" class="form-control" readonly="readonly" style="display:inline;width:inherit;"/>
+                <input type="text" id="datepicker" name="forDate" class="form-control" readonly="readonly" style="display:inline;width:inherit;"/>
             </p>
             <p class="text-center" style="margin-top:10px;clear: both;">
                 <button type="submit" class="btn btn-lg btn-primary">Upload</button>
-
             </p>
         </form>
     </div>
@@ -166,7 +144,9 @@
         });
 
         $('#datepicker').parent().datepicker({
-            "autoclose":true,"format":"yyyy-mm-dd","language":"zh-CN"
+            "autoclose":true,
+            "format":"yyyy-mm-dd",
+            "startDate": new Date()
         });
 
         var currentPage = $("#currentPage").val();
@@ -181,12 +161,12 @@
 
     $("#adding").bind('click',function(){
         index++;
-        var div = $('<div class="input-group col-sm-12 margin5"></div>');
+        var div = $('<div class="input-group col-sm-11 margin5"></div>');
         var itemSpan = $('<span class="input-group-addon" id="basic-addon' + index + '">' + index + '</span>');
         var itemInput = $('<input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1" name="item'+ index + '"/>');
         div.append(itemSpan);
         div.append(itemInput);
-        var list = $(".col-sm-12");
+        var list = $(".col-sm-11");
         div.insertAfter(list[list.length - 1]);
     });
 </script>

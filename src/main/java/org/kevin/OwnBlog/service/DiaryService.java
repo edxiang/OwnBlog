@@ -43,8 +43,8 @@ public class DiaryService {
         diaryRepository.delete(diary);
     }
 
-    public List<Diary> findByCreateTimeBetween(Date beginDate, Date endDate){
-        return diaryRepository.findByCreateTimeBetween(beginDate,endDate);
+    public List<Diary> findByForTimeBetween(Date beginDate, Date endDate){
+        return diaryRepository.findByForTimeBetween(beginDate,endDate);
     }
 
     public long count() {
