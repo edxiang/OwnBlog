@@ -11,4 +11,5 @@ import java.util.Date;
 public class TwitterCriteria {
     private Date fromDate;
     private Date toDate;
+    private String value;
 }

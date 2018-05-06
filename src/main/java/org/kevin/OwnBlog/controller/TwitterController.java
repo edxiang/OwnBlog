@@ -37,7 +37,7 @@ public class TwitterController {
 
         String toPage = request.getParameter("page");
         int page = 0;
-        if (toPage != null)
+        if (toPage != null && !toPage.equals(""))
             page = Integer.parseInt(toPage);
         TwitterCriteria criteria = new TwitterCriteria();
         Page<Twitter> twitterPage = twitterService.findTwitterCriteria(page, SIZE, criteria);

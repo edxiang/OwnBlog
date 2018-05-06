@@ -48,7 +48,7 @@ public class WebFilter {
                 HttpSession session = request.getSession();
                 Object obj = session.getAttribute("login");
                 if (obj != null && (boolean) obj) {
-                    filterChain.doFilter(sRequest, sResponse);
+                    //filterChain.doFilter(sRequest, sResponse);
                 } else {
                     HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) sResponse);
                     wrapper.sendRedirect("/login");
