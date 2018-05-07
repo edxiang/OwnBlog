@@ -1,5 +1,6 @@
 package org.kevin.OwnBlog;
 
+import com.sun.xml.internal.ws.util.Pool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kevin.OwnBlog.model.Album;
@@ -12,6 +13,7 @@ import org.kevin.OwnBlog.service.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -42,16 +45,21 @@ public class Tester {
     private TwitterService twitterService;
     @Test
     public void pageInTwitter(){
-        /*int page = 2;
-        int size = 15;
-        TwitterCriteria criteria = new TwitterCriteria();
-        Page<Twitter> pageable = twitterService.findTwitterCriteria(page,size,criteria);
-        Iterator<Twitter> ts = pageable.iterator();
-        while(ts.hasNext()){
-            Twitter t = ts.next();
-            System.out.println(t.getId());
-        }*/
-        System.out.println(twitterService.count());
+        TwitterCriteria tc = new TwitterCriteria();
+        String fromDate = "2018-4-8";
+//        String toDate = "2018-5-7";
+//        String value = "%damn%";
+        tc.setFromDate(Utils.StringToDate(fromDate));
+//        tc.setToDate(Utils.StringToDate(toDate));
+//        tc.setValue(value);
+
+        Page<Twitter> pages = twitterService.findTwitterCriteria(0,10,tc);
+        List<Twitter> lists = pages.getContent();
+        System.out.println(lists.size());
+        System.out.println(pages.getTotalPages());
+        for(Twitter t:pages){
+            System.out.println(t.getTwitter() + "   -   "+ t.getCreateTime());
+        }
     }
 
     @Autowired

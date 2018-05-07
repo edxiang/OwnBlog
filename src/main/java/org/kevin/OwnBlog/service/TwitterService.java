@@ -52,13 +52,15 @@ public class TwitterService {
         Page<Twitter> twitterPage = twitterRepository.findAll(new Specification<Twitter>() {
             @Override
             public Predicate toPredicate(Root<Twitter> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> list = new ArrayList<>();
+                List<Predicate> list = new ArrayList<>(); // it works!
                 if (twitterCriteria.getFromDate() != null) {
-                    //list.add(criteriaBuilder.equal(root.get("createTime").as(Date.class), twitterCriteria.getFromDate()));
-                    criteriaBuilder.greaterThanOrEqualTo(root.get("createTime").as(Date.class), twitterCriteria.getFromDate());
+                    list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("createTime"), twitterCriteria.getFromDate()));
                 }
                 if (twitterCriteria.getToDate() != null) {
-                    list.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime").as(Date.class), twitterCriteria.getToDate()));
+                    list.add(criteriaBuilder.lessThanOrEqualTo(root.get("createTime"), twitterCriteria.getToDate()));
+                }
+                if (twitterCriteria.getValue() != null && !twitterCriteria.getValue().equals("")) {
+                    list.add(criteriaBuilder.like(root.get("twitter"), twitterCriteria.getValue()));
                 }
                 Predicate[] p = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(p));

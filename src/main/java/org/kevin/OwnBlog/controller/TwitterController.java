@@ -1,5 +1,6 @@
 package org.kevin.OwnBlog.controller;
 
+import org.kevin.OwnBlog.Utils;
 import org.kevin.OwnBlog.model.Twitter;
 import org.kevin.OwnBlog.model.TwitterCriteria;
 import org.kevin.OwnBlog.service.TwitterService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,34 +24,61 @@ import java.util.List;
 public class TwitterController {
     @Autowired
     private TwitterService twitterService;
-    private static final int SIZE = 10;
+    private static final long milliseconds = 24 * 60 * 60 * 1000L;
 
-    @RequestMapping("/twitters")
+    @RequestMapping(value = "/twitters", method = RequestMethod.GET)
     public String twitters(ModelMap map, HttpServletRequest request) {
-        long pages = twitterService.count();
-        List<Integer> pageList = new ArrayList<>();
-        for (int i = 0; i < pages / SIZE; i++) {
-            pageList.add(i);
+        TwitterCriteria criteria = new TwitterCriteria();
+        int size = 10;
+
+        String fromDateString = request.getParameter("fromDate");
+        Date fromDate = null;
+        if (fromDateString != null && !fromDateString.equals("")) {
+            fromDate = Utils.StringToDate(fromDateString);
+            criteria.setFromDate(fromDate);
+            size = 1000;
         }
-        if (pages % SIZE > 0) {
-            pageList.add(pageList.size());
+        String toDateString = request.getParameter("toDate");
+        if (toDateString != null && !toDateString.equals("")) {
+            Date toDate = Utils.StringToDate(toDateString);
+            toDate = new Date(toDate.getTime() + milliseconds - 1);
+            if (fromDate != null) {
+                if (fromDate.getTime() < toDate.getTime()) {
+                    criteria.setToDate(toDate);
+                } else if (fromDate.getTime() == toDate.getTime()) {
+                    criteria.setToDate(toDate);
+                } else {
+                    criteria.setToDate(toDate);
+                    criteria.setFromDate(null);
+                }
+            }
+            size = 1000;
+        }
+        String value = request.getParameter("value");
+        if (value != null && !value.equals("")) {
+            criteria.setValue("%"+value+"%");
+            size = 1000;
         }
 
         String toPage = request.getParameter("page");
         int page = 0;
         if (toPage != null && !toPage.equals(""))
             page = Integer.parseInt(toPage);
-        TwitterCriteria criteria = new TwitterCriteria();
-        Page<Twitter> twitterPage = twitterService.findTwitterCriteria(page, SIZE, criteria);
+        Page<Twitter> twitterPage = twitterService.findTwitterCriteria(page, size, criteria);
+
+        List<Integer> pageList = new ArrayList<>();
+        for (int i = 0; i < twitterPage.getTotalPages(); i++) {
+            pageList.add(i);
+        }
 
         map.addAttribute("twitters", twitterPage);
         map.addAttribute("pages", pageList);
-        map.addAttribute("currentPage",page);
-        map.addAttribute("last",pageList.size() - 1);
+        map.addAttribute("currentPage", page);
+        map.addAttribute("last", pageList.size() - 1);
 
         Object obj = request.getSession().getAttribute("login");
-        if(obj != null && (Boolean)obj){
-            map.addAttribute("login",true);
+        if (obj != null && (Boolean) obj) {
+            map.addAttribute("login", true);
         }
         return "twitters";
     }

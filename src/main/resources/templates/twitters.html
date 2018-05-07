@@ -13,6 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
     <link th:href="@{css/theme.css}" rel="stylesheet"/>
+    <link th:href="@{css/bootstrap-datepicker.css}" rel="stylesheet"/>
 
     <style>
         .t {
@@ -38,6 +39,23 @@
         <p>If you don't like it, there is nothing I can do. hhh</p>
     </div>
 
+    <form class="form-inline" method="get" action="/twitters">
+        <div class="form-group">
+            <label for="inputFromDate">fromDate:</label>
+            <input name="fromDate" type="text" class="form-control" id="inputFromDate" placeholder="from date" readonly="readonly" />
+        </div>
+        <div class="form-group">
+            <label for="inputToDate">toDate:</label>
+            <input name="toDate" type="text" class="form-control" id="inputToDate" placeholder="to date" readonly="readonly"/>
+        </div>
+        <div class="form-group">
+            &nbsp;&nbsp;&nbsp;
+            <label for="inputKeyValue">keyValue:</label>
+            <input name="value" type="text" class="form-control" id="inputKeyValue" placeholder="key value" />
+        </div>
+        <button type="submit" class="btn btn-default">filter</button>
+    </form>
+
     <div class="page-header">
         <h1>real-time moods</h1>
     </div>
@@ -59,8 +77,8 @@
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li th:each="p,iterStat:${pages}" class="forLi"><a href="toPage" th:href="@{twitters(page=${p})}"
-                                                               th:text="${p}">page number</a></li>
+            <li th:each="p,iterStat:${pages}" class="forLi">
+                <a href="toPage" th:href="@{twitters(page=${p})}" th:text="${p}">page number</a></li>
             <li>
                 <a href="#" th:href="@{twitters(page=${last})}" aria-label="Last">
                     <span aria-hidden="true">&raquo;</span>
@@ -108,6 +126,8 @@
 <script th:src="@{js/bootstrap.js}"></script>
 <script th:src="@{js/holder.min.js}"></script>
 <script th:src="@{js/layer/layer.js}"></script>
+<script th:src="@{js/bootstrap-datepicker.js}"></script>
+<script th:src="@{js/bootstrap-datepicker.zh-CN.min.js}"></script>
 <script>
     $().ready(function () {
         var h = $(window).height();
@@ -132,6 +152,18 @@
                 return;
             }
         });
+    });
+
+    $('#inputFromDate').datepicker({
+        "autoclose":true,
+        "format":"yyyy-mm-dd",
+        "endDate":new Date()
+    });
+
+    $('#inputToDate').datepicker({
+        "autoclose":true,
+        "format":"yyyy-mm-dd",
+        "endDate":new Date()
     });
 </script>
 </body>
