@@ -44,8 +44,15 @@
 <div class="container theme-showcase">
     <div class="jumbotron" style="margin-top:5%;">
         <h1>MUST TO BE DONE</h1>
-        <p>Wait till have some proper words...</p>
+        <p id="properSentence">Wait till have some proper words...</p>
     </div>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="inputKeyValue">Remember What Today:</label>
+            <input name="value" type="text" class="form-control" id="inputKeyValue" placeholder="key value" />
+        </div>
+        <button type="submit" class="btn btn-default" id="properBtn">filter</button>
+    </form>
     <form class="form-horizontal" action="/diary/update" method="post" th:each="d,iterStat:${diaries}">
         <input type="hidden" value="id" name="id" th:value="${d.id}" />
         <div class="form-group">
@@ -168,6 +175,18 @@
         div.append(itemInput);
         var list = $(".col-sm-11");
         div.insertAfter(list[list.length - 1]);
+    });
+
+    $("#properBtn").bind('click',function(){
+        $.ajax({
+            method: "get",
+            url: "/diary/changeSentence",
+            data: {'newSentence': $("#inputKeyValue").val()},
+            success: function(data){
+                $("#properSentence").html(data);
+            },
+            complete:$("#properBtn").attr('disabled','disabled')
+        });
     });
 </script>
 </body>
