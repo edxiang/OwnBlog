@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,7 +54,6 @@ public class MainController {
             request.getSession().setAttribute("login", false);
             return "login";
         } else {
-            request.getSession().setMaxInactiveInterval(60 * 60 * 12);
             request.getSession().setAttribute("login", true);
             return "main2";
         }
@@ -69,6 +69,11 @@ public class MainController {
     @RequestMapping("/addblog")
     public String addBlog() {
         return "addBlog";
+    }
+
+    @RequestMapping("/testJquery")
+    public String testJquery(){
+        return "/jquery/test";
     }
 
 }

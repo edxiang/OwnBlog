@@ -1,9 +1,11 @@
 package org.kevin.OwnBlog.controller;
 
+import org.apache.log4j.Logger;
 import org.kevin.OwnBlog.Utils;
 import org.kevin.OwnBlog.model.Twitter;
 import org.kevin.OwnBlog.model.TwitterCriteria;
 import org.kevin.OwnBlog.service.TwitterService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import java.util.List;
  */
 @Controller
 public class TwitterController {
+    static Logger log = Logger.getLogger(TwitterController.class.getName());
+
     @Autowired
     private TwitterService twitterService;
     private static final long milliseconds = 24 * 60 * 60 * 1000L;
@@ -89,6 +93,7 @@ public class TwitterController {
         String content = request.getParameter("twitter").replaceAll("\\r\\n", "<br/>");
         twitter.setTwitter(content);
         twitterService.save(twitter);
+        log.error("******************************************************************" + content);
         return "redirect:../twitters";
     }
 }

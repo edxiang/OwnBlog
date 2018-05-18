@@ -1,6 +1,5 @@
 package org.kevin.OwnBlog;
 
-import com.sun.xml.internal.ws.util.Pool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kevin.OwnBlog.model.Album;

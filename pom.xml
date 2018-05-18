@@ -38,7 +38,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
         <dependency>
-            <!-- still do not how to use it... -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
