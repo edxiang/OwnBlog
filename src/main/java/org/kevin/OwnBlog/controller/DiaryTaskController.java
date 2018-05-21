@@ -20,6 +20,12 @@ public class DiaryTaskController {
     public String diaryTask(ModelMap map) {
         Task task = taskService.findByCreateTime(Utils.getBeginTimeOfDay(), Utils.getEndTimeOfDay());
         map.addAttribute("task", task);
+
+        Task t = new Task();
+        t.setCreateTime(Utils.getGTM8());
+        t.setContent("this is the content");
+        t.setSummary("this is the summary");
+        taskService.save(t);
         return "/diaryTask";
     }
 
