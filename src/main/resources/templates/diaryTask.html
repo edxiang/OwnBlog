@@ -14,6 +14,7 @@
     <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
     <link th:href="@{css/theme.css}" rel="stylesheet"/>
     <link th:href="@{css/bootstrap-datepicker.css}" rel="stylesheet"/>
+    <link th:href="@{css/layui.css}" rel="stylesheet" />
 
     <style>
         .t {
@@ -30,12 +31,8 @@
             /*margin:inherit;*/
         }
 
-        .margin5{
-            margin:7px;
-        }
-
-        .borderBottem{
-            border-bottom: dashed black 1px;
+        .margin7 {
+            margin-top: 7px;
         }
     </style>
 </head>
@@ -46,90 +43,49 @@
         <h1>MUST TO BE DONE</h1>
         <p id="properSentence">Wait till have some proper words...</p>
     </div>
-    <form class="form-inline">
+    <div class="form-inline">
         <div class="form-group">
-            <label for="inputKeyValue">Remember What Today:</label>
-            <input name="value" type="text" class="form-control" id="inputKeyValue" placeholder="key value" />
+            <label for="inputKeyDay">Pick up a Day:</label>
+            <input name="date" type="text" class="form-control" id="inputKeyDay" placeholder="yyyy-MM-dd"
+                   readonly="readonly"/>
+            <button class="btn btn-default" id="properBtn">filter</button>
         </div>
-        <button type="submit" class="btn btn-default" id="properBtn">filter</button>
-    </form>
-    <form class="form-horizontal" action="/diary/update" method="post" th:each="d,iterStat:${diaries}">
-        <input type="hidden" value="id" name="id" th:value="${d.id}" />
-        <div class="form-group">
-            <div class="col-sm-12">
-                <label th:text="' * ' +  ${d.item}">diary works</label>
-            </div>
+    </div>
+    <hr class="featurette-divider"/>
+
+    <h3>Task
+        <a id="contentEdit" class="pull-right">edit</a>
+    </h3>
+    <div class="panel panel-default">
+        <div id="contentInput" class="panel-body">
+            <textarea class="form-control" rows="3" id="diaryTaskContent" readonly="readonly"
+                      th:text="${diaryTask.content}"></textarea>
+            <button class="btn btn-primary margin7" id="contentBtn">Finish</button>
         </div>
-        <div class="form-group">
-            <div class="col-sm-8">
-                <input class="form-control" type="text" name="note" placeholder="Note" th:value="${d.note}" th:unless="${d.status}"/>
-                <input class="form-control" type="text" readonly="readonly" th:value="${d.note}" th:if="${d.status}"/>
-            </div>
-            <div class="checkbox col-sm-2">
-                &nbsp;&nbsp;&nbsp;
-                <input type="checkbox" th:unless="${d.status}" name="checked" th:text="finish"/>
-                <input type="checkbox" checked="checked" disabled="disabled" th:if="${d.status}" th:text="finish"/>
-            </div>
+    </div>
+
+    <h3>Summary
+        <a id="summaryEdit" class="pull-right">edit</a>
+    </h3>
+    <div class="panel panel-default">
+        <div id="summaryInput" class="panel-body">
+            <textarea class="form-control" rows="5" id="diaryTaskSummary" readonly="readonly"
+                      th:text="${diaryTask.summary}"></textarea>
+            <button class="btn btn-primary margin7" id="summaryBtn">Finish</button>
         </div>
-        <div class="from-group" th:unless="${d.status}" style="clear: both;">
-            &nbsp;
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-        <hr class="featurette-divider"/>
-    </form>
+    </div>
 </div>
 
+<img id="loadingGif" style="display: none;" th:src="@{img/loading.gif}" width="269px" height="269px" text=" " />
+
 <div class="container">
+    <hr class="featurette-divider"/>
     <footer>
         <p>
             <a href="main2.html" th:href="@{/}">Back to Home</a>
         </p>
     </footer>
 </div>
-
-<div class="t" th:if="${login}">
-    <a href="javascript:void(0);">
-        <img id="newDiary" th:src="@{img/twitter.png}" alt="Generic placeholder image" width="75" height="75"/>
-    </a>
-</div>
-
-<div style="display:none" id="addDiary">
-    <div class="container" style="width:380px;">
-        <form action="/diary/items" method="post">
-            <div class="row" style="margin-top:10px;">
-                <div class="col-sm-12" style="margin-right:10px;">
-                    <label for="">plan to do:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <span id="adding" class="btn btn-sm btn-info pull-right col-sm-3">add item</span>
-                </div>
-                <div class="input-group col-sm-11 margin5">
-                    <span class="input-group-addon" id="basic-addon1">1</span>
-                    <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
-                           name="item1"/>
-                </div>
-                <div class="input-group col-sm-11 margin5">
-                    <span class="input-group-addon" id="basic-addon2">2</span>
-                    <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
-                           name="item2"/>
-                </div>
-                <div class="input-group col-sm-11 margin5">
-                    <span class="input-group-addon" id="basic-addon3">3</span>
-                    <input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1"
-                           name="item3"/>
-                </div>
-            </div>
-            <p class="">
-                <label for="datepicker">pick up a date:</label>
-                <input type="text" id="datepicker" name="forDate" class="form-control" readonly="readonly" style="display:inline;width:inherit;"/>
-            </p>
-            <p class="text-center" style="margin-top:10px;clear: both;">
-                <button type="submit" class="btn btn-lg btn-primary">Upload</button>
-            </p>
-        </form>
-    </div>
-</div>
-
 
 <script th:src="@{js/jquery-3.2.1.js}"></script>
 <script th:src="@{js/bootstrap.js}"></script>
@@ -138,54 +94,79 @@
 <script th:src="@{js/bootstrap-datepicker.js}"></script>
 <script th:src="@{js/bootstrap-datepicker.zh-CN.min.js}"></script>
 <script>
-    var index = 3;
+    var contentTextarea = $("#diaryTaskContent");
+    var summaryTextarea = $("#diaryTaskSummary");
+    var contentFinishBtn = $("#contentBtn");
+    var summaryFinishBtn = $("#summaryBtn");
+
     $().ready(function () {
-        $("#newDiary").bind('click', function () {
-            layer.open({
-                type: 1,
-                title: 'To-Do-List',
-                skin: 'layui-layer-rim',
-                area: ['420px', '400px'],
-                content: $("#addDiary")
-            });
-        });
+        contentFinishBtn.hide();
+        summaryFinishBtn.hide();
+    });
 
-        $('#datepicker').parent().datepicker({
-            "autoclose":true,
-            "format":"yyyy-mm-dd",
-            "startDate": new Date()
-        });
+    $('#inputKeyDay').datepicker({
+        "autoclose": true,
+        "format": "yyyy-mm-dd",
+        "endDate": new Date()
+    });
 
-        var currentPage = $("#currentPage").val();
-        var objs = $(".forLi");
-        $.each(objs, function (i) {
-            if (i == currentPage) {
-                $(this).addClass("active");
-                return;
+    $("#contentEdit").bind('click', function () {
+        contentTextarea.removeAttr('readonly');
+        contentFinishBtn.show();
+    });
+    $("#summaryEdit").bind('click', function () {
+        summaryTextarea.removeAttr('readonly');
+        summaryFinishBtn.show();
+    });
+
+    $("#contentBtn").bind('click', function () {
+        layer.open({
+            type:1,
+            title:false,
+            icon:0,
+            content: $("#loadingGif")
+        });
+        $.ajax({
+            method: "get",
+            url: "/diaryTask/update",
+            data: {'content': $("#diaryTaskContent").val()},
+            success: function (data) {
+                contentTextarea.val(data);
+                contentTextarea.attr('readonly', 'readonly');
+                contentFinishBtn.hide();
+                layer.closeAll();
+            }
+        });
+    });
+    $("#summaryBtn").bind('click', function () {
+        $.ajax({
+            method: "get",
+            url: "/diaryTask/update",
+            data: {'summary': $("#diaryTaskSummary").val()},
+            success: function (data) {
+                summaryTextarea.val(data);
+                summaryTextarea.attr('readonly', 'readonly');
+                summaryFinishBtn.hide();
             }
         });
     });
 
-    $("#adding").bind('click',function(){
-        index++;
-        var div = $('<div class="input-group col-sm-11 margin5"></div>');
-        var itemSpan = $('<span class="input-group-addon" id="basic-addon' + index + '">' + index + '</span>');
-        var itemInput = $('<input type="text" class="form-control" placeholder="item" aria-describedby="basic-addon1" name="item'+ index + '"/>');
-        div.append(itemSpan);
-        div.append(itemInput);
-        var list = $(".col-sm-11");
-        div.insertAfter(list[list.length - 1]);
-    });
 
-    $("#properBtn").bind('click',function(){
+    $("#properBtn").bind('click', function () {
         $.ajax({
             method: "get",
-            url: "/diary/changeSentence",
-            data: {'newSentence': $("#inputKeyValue").val()},
-            success: function(data){
-                $("#properSentence").html(data);
-            },
-            complete:$("#properBtn").attr('disabled','disabled')
+            url: "/diaryTask/getTaskByDate",
+            data: {'date': $("#inputKeyDay").val()},
+            success: function (data) {
+                // using jQuery to change the String to Object
+                var jsonObj = $.parseJSON(data);
+
+                $("#diaryTaskContent").val(jsonObj.content);
+                $("#diaryTaskSummary").val(jsonObj.summary);
+
+                $("#contentEdit").unbind();
+                $("#summaryEdit").unbind();
+            }
         });
     });
 </script>

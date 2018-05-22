@@ -207,6 +207,7 @@ $("#p2").before(createNote);
     x.attr("data","forwhat");
     x.attr("src","helloworld");
     x.toggleClass("item");
+    x.removeAttr('data');
 
     console.log(x.html()); // the whole content, including the tag
     console.log(x.text()); // just the text content.
