@@ -76,4 +76,12 @@ public class MainController {
         return "/jquery/test";
     }
 
+    @RequestMapping("/ajaxTesting")
+    @ResponseBody
+    public String testAjax(HttpServletRequest request){
+        String name = request.getParameter("username");
+        String psw = request.getParameter("psw");
+        return "hello world!";
+    }
+
 }

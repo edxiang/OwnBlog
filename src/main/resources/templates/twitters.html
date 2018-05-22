@@ -73,14 +73,14 @@
         <input type="hidden" value="currentPage" id="currentPage" th:value="${currentPage}"/>
         <ul class="pagination pagination-lg">
             <li>
-                <a th:href="@{twitters(page=0)}" aria-label="First">
+                <a th:href="@{twitters(page=${previous})}" aria-label="First">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li th:each="p,iterStat:${pages}" class="forLi">
                 <a href="toPage" th:href="@{twitters(page=${p})}" th:text="${p}">page number</a></li>
             <li>
-                <a href="#" th:href="@{twitters(page=${last})}" aria-label="Last">
+                <a href="#" th:href="@{twitters(page=${next})}" aria-label="Last">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

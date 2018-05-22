@@ -60,7 +60,7 @@ public class TwitterController {
         }
         String value = request.getParameter("value");
         if (value != null && !value.equals("")) {
-            criteria.setValue("%"+value+"%");
+            criteria.setValue("%" + value + "%");
             size = 1000;
         }
 
@@ -78,7 +78,13 @@ public class TwitterController {
         map.addAttribute("twitters", twitterPage);
         map.addAttribute("pages", pageList);
         map.addAttribute("currentPage", page);
-        map.addAttribute("last", pageList.size() - 1);
+
+        int previous = -1;
+        int next = -1;
+        previous = page == 0 ? 0 : page - 1;
+        next = page == pageList.size() - 1 ? pageList.size() - 1 : page + 1;
+        map.addAttribute("previous", previous);
+        map.addAttribute("next", next);
 
         Object obj = request.getSession().getAttribute("login");
         if (obj != null && (Boolean) obj) {

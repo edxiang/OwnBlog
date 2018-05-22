@@ -165,52 +165,69 @@
     });
 </script>
 <script>  // test remove tag
-        /*
-        // remove by ID in js. work!
-        var div1 = document.getElementById("albumDiv1");
-        div1.parentNode.removeChild(div1);
+/*
+// remove by ID in js. work!
+var div1 = document.getElementById("albumDiv1");
+div1.parentNode.removeChild(div1);
 
-       // remove by TagName in js. work!
-        var div1 = document.getElementsByTagName("aside")[0];
-        div1.parentNode.removeChild(div1);
+// remove by TagName in js. work!
+var div1 = document.getElementsByTagName("aside")[0];
+div1.parentNode.removeChild(div1);
 
-        // remove in jQuery
-        var div1 = $("#albumDiv1");
-        div1.remove(); // remove the tag and its content.
-        div1.html("");  // just remove the content.
+// remove in jQuery
+var div1 = $("#albumDiv1");
+div1.remove(); // remove the tag and its content.
+div1.html("");  // just remove the content.
 
-        // remove the aside tag with class=item.
-        $("aside").remove(".item");
-        */
+// remove the aside tag with class=item.
+$("aside").remove(".item");
+*/
 </script>
 
 <script> // create and add element
-        /*
-        var node = $("<p>NODE</p>");
-        var createNote = $("<p>Create Node</p>");
+/*
+var node = $("<p>NODE</p>");
+var createNote = $("<p>Create Node</p>");
 
-        // add to the last of the DIV
-       $("#firstAside").append(node);
-        // add to the first of the DIV
-        $("#secondAside").prepend(createNote);
+// add to the last of the DIV
+$("#firstAside").append(node);
+// add to the first of the DIV
+$("#secondAside").prepend(createNote);
 
-        // add next to the source node
-        $("#p1").after(node);
-        // add before to the source node.
-        $("#p2").before(createNote);
-        */
+// add next to the source node
+$("#p1").after(node);
+// add before to the source node.
+$("#p2").before(createNote);
+*/
 </script>
 
 <script> // the content and attribute of Element.
-    /*$("#testBtn").bind('click',function(){
-        var x = $("#divx");
-        x.attr("data","forwhat");
-        x.attr("src","helloworld");
-        x.toggleClass("item");
+/*$("#testBtn").bind('click',function(){
+    var x = $("#divx");
+    x.attr("data","forwhat");
+    x.attr("src","helloworld");
+    x.toggleClass("item");
 
-        console.log(x.html()); // the whole content, including the tag
-        console.log(x.text()); // just the text content.
-    });*/
+    console.log(x.html()); // the whole content, including the tag
+    console.log(x.text()); // just the text content.
+});*/
+</script>
+
+<script> // the ajax.
+var toServer = {"username": "xiaoxiang", "psw": "0322"};
+$("#testBtn").bind('click', function () {
+    $.ajax({
+        url: "/ajaxTesting",
+        type:"get",
+        data: toServer,
+        success: function (dataBack) {
+            console.log("this is succeed: " + dataBack);
+        },
+        complete: function () {
+            console.log("this is complete");
+        }
+    });
+});
 </script>
 </body>
 
