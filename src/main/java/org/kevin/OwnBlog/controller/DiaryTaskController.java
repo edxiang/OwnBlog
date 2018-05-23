@@ -24,10 +24,19 @@ public class DiaryTaskController {
     private static final long milliseconds = 24 * 60 * 60 * 1000L;
 
     @RequestMapping("/diaryTask")
-    public String diaryTask(ModelMap map) {
+    public String diaryTask(ModelMap map, HttpServletRequest request) {
         Task task = taskService.findByCreateTime(Utils.getBeginTimeOfDay(), Utils.getEndTimeOfDay());
+        if(task == null){
+            task = new Task();
+            task.setContent("");
+            task.setSummary("");
+        }
         map.addAttribute("diaryTask", task);
 
+        Object obj = request.getSession().getAttribute("login");
+        if (obj != null && (Boolean) obj) {
+            map.addAttribute("login", true);
+        }
         return "/diaryTask";
     }
 
