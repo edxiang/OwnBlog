@@ -229,6 +229,9 @@ $("#testBtn").bind('click', function () {
         }
     });
 });
+
+    var jsonObj = $.parseJSON(toServer); // JsonString to JsonObject
+    var jsonString = JSON.stringify(jsonObj); // JsonObject to JsonString
 </script>
 </body>
 

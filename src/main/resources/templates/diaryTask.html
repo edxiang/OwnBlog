@@ -14,7 +14,6 @@
     <link th:href="@{css/bootstrap.css}" rel="stylesheet"/>
     <link th:href="@{css/theme.css}" rel="stylesheet"/>
     <link th:href="@{css/bootstrap-datepicker.css}" rel="stylesheet"/>
-    <link th:href="@{css/layui.css}" rel="stylesheet" />
 
     <style>
         .margin7 {
@@ -161,6 +160,9 @@
                     });
                 } else {
                     var jsonObj = $.parseJSON(data);
+                    var jsonString = JSON.stringify(jsonObj);
+                    console.log(jsonObj);
+                    console.log(jsonString);
                     $("#diaryTaskContent").val(jsonObj.content);
                     $("#diaryTaskSummary").val(jsonObj.summary);
                 }
