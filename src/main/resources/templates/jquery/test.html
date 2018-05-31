@@ -107,6 +107,23 @@
         <hr class="featurette-divider"/>
     </div>
 
+    <div class="progress">
+        <div id="progressBar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+            10%
+        </div>
+    </div>
+    <div class="progress">
+        <div id="progressBar1" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+            20%
+        </div>
+    </div>
+    <div class="progress">
+        <div id="progressBar2" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+            30%
+        </div>
+    </div>
+
+
     <footer>
         <button class="btn btn-primary" id="testBtn">clickMe</button>
         <p>
@@ -151,6 +168,69 @@
 <script th:src="@{js/bootstrap.js}"></script>
 <script th:src="@{js/holder.min.js}"></script>
 <script th:src="@{js/layer/layer.js}"></script>
+<script>
+    $("#testBtn").bind('click',function(){
+        $(".progress-bar").each(function(){
+            var obj = $(this);
+            var value = 10;
+            var interval = setInterval(function(){
+                $.ajax({
+                    url:"/ajaxTestProgress",
+                    data: {'progressValue':value},
+                    type:"get",
+                    success:function(data){
+                        value = data;
+                        if(data == 100) {
+                            clearInterval(interval);
+                            $(obj).removeClass("active");
+                        }
+                        $(obj).width(data + "%");
+                        $(obj).text(data + "%");
+                    }
+                });
+            }, 3000);
+        });
+        /*interval = setInterval(function(){
+            $.ajax({
+                url:"/ajaxTestProgress",
+                data: {'progressValue':value},
+                type:"get",
+                success:function(data){
+                    value = data;
+                    if(data == 100) {
+                        clearInterval(interval);
+                        $("#progressBar").removeClass("active");
+//                    $("#progressBar").toggleClass("active");
+                    }
+//                console.log(data);
+                    $("#progressBar").width(data + "%");
+                    $("#progressBar").text(data + "%");
+                }
+            });
+        }, 3000);*/
+    });
+
+    function timeInterval(obj){
+        $.ajax({
+            url:"/ajaxTestProgress",
+            data: {'progressValue':value},
+            type:"get",
+            success:function(data){
+                value = data;
+                if(data == 100) {
+//                    clearInterval(interval);
+                    $(obj).removeClass("active")
+//                    $("#progressBar").toggleClass("active");
+                }
+//                console.log(data);
+                $(obj).width(data + "%");
+                $(obj).text(data + "%");
+            }
+        });
+    }
+</script>
+
+
 <script>
     $().ready(function () {
         $("#addAlbum").bind('click', function () {
@@ -215,7 +295,7 @@ $("#p2").before(createNote);
 </script>
 
 <script> // the ajax.
-var toServer = {"username": "xiaoxiang", "psw": "0322"};
+/*var toServer = {"username": "xiaoxiang", "psw": "0322"};
 $("#testBtn").bind('click', function () {
     $.ajax({
         url: "/ajaxTesting",
@@ -228,10 +308,13 @@ $("#testBtn").bind('click', function () {
             console.log("this is complete");
         }
     });
-});
+});*/
+/*
 
     var jsonObj = $.parseJSON(toServer); // JsonString to JsonObject
     var jsonString = JSON.stringify(jsonObj); // JsonObject to JsonString
+*/
+
 </script>
 </body>
 

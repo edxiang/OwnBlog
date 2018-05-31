@@ -71,17 +71,4 @@ public class MainController {
         return "addBlog";
     }
 
-    @RequestMapping("/testJquery")
-    public String testJquery(){
-        return "/jquery/test";
-    }
-
-    @RequestMapping("/ajaxTesting")
-    @ResponseBody
-    public String testAjax(HttpServletRequest request){
-        String name = request.getParameter("username");
-        String psw = request.getParameter("psw");
-        return "hello world!";
-    }
-
 }

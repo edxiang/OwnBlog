@@ -28,8 +28,8 @@ public class DiaryTaskController {
         Task task = taskService.findByCreateTime(Utils.getBeginTimeOfDay(), Utils.getEndTimeOfDay());
         if(task == null){
             task = new Task();
-            task.setContent("What should I do today?");
-            task.setSummary("not quite sure yet.");
+            task.setContent("");
+            task.setSummary("");
         }
         map.addAttribute("diaryTask", task);
 
@@ -44,10 +44,8 @@ public class DiaryTaskController {
     @ResponseBody
     public String update(HttpServletRequest request){
         Task task = taskService.findByCreateTime(Utils.getBeginTimeOfDay(), Utils.getEndTimeOfDay());
-        if(task == null){
+        if(task == null)
             task = new Task();
-            task.setCreateTime(Utils.getGTM8());
-        }
 
         String content = request.getParameter("content");
         String summary = request.getParameter("summary");
