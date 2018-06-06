@@ -28,8 +28,8 @@ public class DiaryTaskController {
         Task task = taskService.findByCreateTime(Utils.getBeginTimeOfDay(), Utils.getEndTimeOfDay());
         if(task == null){
             task = new Task();
-            task.setContent("");
-            task.setSummary("");
+            /*task.setContent("");
+            task.setSummary("");*/
         }
         map.addAttribute("diaryTask", task);
 
