@@ -54,9 +54,9 @@ public class AlbumController {
         long c = System.currentTimeMillis();
 
         try {
-            String baseSrc = "/"+ResourceUtils.getURL("classpath:").getPath().substring(1) + "static/img/" + albumId;
+            //String baseSrc = "/"+ResourceUtils.getURL("classpath:").getPath().substring(1) + "static/img/" + albumId;
+            String baseSrc = "/usr/media/img/" + albumId;
             String imgSrc = "img/" + albumId;
-            baseSrc = baseSrc.replace("%20", " ");
             File folder = new File(baseSrc);
             System.out.println(folder.setWritable(true, false));
             if (!folder.exists()) {

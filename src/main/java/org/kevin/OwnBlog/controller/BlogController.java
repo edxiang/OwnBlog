@@ -36,7 +36,7 @@ public class BlogController {
 
         List<Blog> blogs = (List) redisTemplate.opsForValue().get("blogs");
         map.addAttribute("blogs", blogs);
-        return "blogs";
+        return "blogs4.0";
     }
 
     @RequestMapping(value = "/blogs/essay", method = RequestMethod.POST)

@@ -26,7 +26,7 @@ public class WebFilter {
     public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new MyFilter());
-        registration.addUrlPatterns("/*");
+        registration.addUrlPatterns("/**");
         registration.addInitParameter("paramName", "paramValue");
         registration.setName("MyFilter");
         registration.setOrder(1);
@@ -36,6 +36,7 @@ public class WebFilter {
     public class MyFilter implements Filter {
         @Override
         public void destroy() {
+
         }
 
         @Override
@@ -59,6 +60,7 @@ public class WebFilter {
 
         @Override
         public void init(FilterConfig arg0) throws ServletException {
+
         }
     }
 }
