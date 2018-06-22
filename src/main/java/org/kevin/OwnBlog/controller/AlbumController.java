@@ -55,7 +55,7 @@ public class AlbumController {
 
         try {
             //String baseSrc = "/"+ResourceUtils.getURL("classpath:").getPath().substring(1) + "static/img/" + albumId;
-            String baseSrc = "/usr/media/img/" + albumId;
+            String baseSrc = "/media/img/" + albumId;
             String imgSrc = "img/" + albumId;
             File folder = new File(baseSrc);
             System.out.println(folder.setWritable(true, false));
