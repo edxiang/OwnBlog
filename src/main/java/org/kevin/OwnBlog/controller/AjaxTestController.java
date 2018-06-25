@@ -1,6 +1,5 @@
 package org.kevin.OwnBlog.controller;
 
-import lombok.val;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Kevin.Z on 2018/5/30.
+ * 测试 AJAX 的相关用法
  */
 @Controller
 public class AjaxTestController {

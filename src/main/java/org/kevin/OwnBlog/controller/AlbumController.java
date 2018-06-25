@@ -47,6 +47,8 @@ public class AlbumController {
         return "redirect:../albums";
     }
 
+    // 上传文件到服务器
+    // 权限问题，6-20
     @RequestMapping("/uploadFiles")
     @ResponseBody
     public String upload(HttpServletRequest request, @RequestParam(value = "fileArray", required = false) MultipartFile[] files) {

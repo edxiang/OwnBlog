@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * Created by Kevin.Z on 2018/3/1.
+ * 短心情
  */
 @Controller
 public class TwitterController {
@@ -28,8 +29,9 @@ public class TwitterController {
 
     @Autowired
     private TwitterService twitterService;
-    private static final long milliseconds = 24 * 60 * 60 * 1000L;
+    private static final long MILLISECOND_OF_ONE_DAY = 24 * 60 * 60 * 1000L;
 
+    //
     @RequestMapping(value = "/twitters", method = RequestMethod.GET)
     public String twitters(ModelMap map, HttpServletRequest request) {
         TwitterCriteria criteria = new TwitterCriteria();
@@ -45,7 +47,7 @@ public class TwitterController {
         String toDateString = request.getParameter("toDate");
         if (toDateString != null && !toDateString.equals("")) {
             Date toDate = Utils.StringToDate(toDateString);
-            toDate = new Date(toDate.getTime() + milliseconds - 1);
+            toDate = new Date(toDate.getTime() + MILLISECOND_OF_ONE_DAY - 1);
             if (fromDate != null) {
                 if (fromDate.getTime() < toDate.getTime()) {
                     criteria.setToDate(toDate);
@@ -93,6 +95,7 @@ public class TwitterController {
         return "twitters";
     }
 
+    // 新建一条短心情
     @RequestMapping(value = "/twitters/newTwitter", method = RequestMethod.POST)
     public String add(HttpServletRequest request) {
         Twitter twitter = new Twitter();

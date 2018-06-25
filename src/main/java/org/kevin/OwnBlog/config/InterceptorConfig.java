@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Kevin.Z on 2018/6/6.
+ * 监听器，用来检测是否登录似乎有点麻烦
  */
 @Configuration
 public class InterceptorConfig extends WebMvcConfigurerAdapter {

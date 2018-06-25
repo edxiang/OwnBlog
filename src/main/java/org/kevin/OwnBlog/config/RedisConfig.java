@@ -19,10 +19,10 @@ import java.lang.reflect.Method;
 
 /**
  * Created by Kevin.Z on 2018/3/29.
+ * 模仿 http://www.cnblogs.com/ityouknow/p/5748830.html 该博客写的一个 redis
  */
 @Configuration
 @EnableCaching
-// work!
 public class RedisConfig extends CachingConfigurerSupport{
 
     @Bean

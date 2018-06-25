@@ -21,15 +21,13 @@ public class DiaryTaskController {
     @Autowired
     private TaskService taskService;
 
-    private static final long milliseconds = 24 * 60 * 60 * 1000L;
+    private static final long MILLISECOND_OF_ONE_DAY = 24 * 60 * 60 * 1000L;
 
     @RequestMapping("/diaryTask")
     public String diaryTask(ModelMap map, HttpServletRequest request) {
         Task task = taskService.findByCreateTime(Utils.getBeginTimeOfDay(), Utils.getEndTimeOfDay());
         if(task == null){
             task = new Task();
-            /*task.setContent("");
-            task.setSummary("");*/
         }
         map.addAttribute("diaryTask", task);
 
@@ -40,6 +38,7 @@ public class DiaryTaskController {
         return "/diaryTask";
     }
 
+    // 更新每日任务与评论
     @RequestMapping("/diaryTask/update")
     @ResponseBody
     public String update(HttpServletRequest request){
@@ -65,12 +64,13 @@ public class DiaryTaskController {
         return value;
     }
 
+    // 根据日期获取每日任务
     @RequestMapping("diaryTask/getTaskByDate")
     @ResponseBody
     public String getTaskByDate(HttpServletRequest request, ModelMap map){
         String date = request.getParameter("date");
         Date date1 = date != null ? Utils.StringToDate(date):Utils.getGTM8();
-        Date date2 = new Date(date1.getTime() + milliseconds - 1);
+        Date date2 = new Date(date1.getTime() + MILLISECOND_OF_ONE_DAY - 1);
         Task task = taskService.findByCreateTime(date1,date2);
         String json = new Gson().toJson(task);
         return json;

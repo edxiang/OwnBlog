@@ -39,6 +39,7 @@ public class BlogController {
         return "blogs4.0";
     }
 
+    // 提交一篇新文章
     @RequestMapping(value = "/blogs/essay", method = RequestMethod.POST)
     public String newBlog(Blog blog, ModelMap model) {
         String content = Utils.replaceLineCharacter(blog.getContent());
@@ -50,6 +51,7 @@ public class BlogController {
         return "redirect:../blogs";
     }
 
+    // 查看一篇文章
     @RequestMapping(value = "/blogs/blog")
     public String blog(Long id, ModelMap map) {
         List<Blog> blogs = (List) redisTemplate.opsForValue().get("blogs");
@@ -74,6 +76,7 @@ public class BlogController {
         return "blog";
     }
 
+    // 新增评论
     @RequestMapping(value = "/blogs/newComment")
     public String newComment(HttpServletRequest request) {
         long id = Long.parseLong(request.getParameter("id"));
@@ -89,6 +92,7 @@ public class BlogController {
         return "redirect:/blogs/blog?id=" + id;
     }
 
+    // 存储 Blog 的 Redis 的相关操作
     private void redisOperation(Blog blog) {
         List<Blog> blogs = (List) redisTemplate.opsForValue().get("blogs");
         blogs.add(0,blog);

@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by Kevin.Z on 2018/4/26.
+ * 本来是想充当日常任务用，现在已经被 DiaryTask 代替
  */
 @Controller
 public class DiaryController {
