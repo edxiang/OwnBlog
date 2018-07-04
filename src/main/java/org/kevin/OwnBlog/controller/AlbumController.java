@@ -47,8 +47,6 @@ public class AlbumController {
         return "redirect:../albums";
     }
 
-    // 上传文件到服务器
-    // 权限问题，6-20
     @RequestMapping("/uploadFiles")
     @ResponseBody
     public String upload(HttpServletRequest request, @RequestParam(value = "fileArray", required = false) MultipartFile[] files) {
@@ -58,11 +56,9 @@ public class AlbumController {
         try {
             //String baseSrc = "/"+ResourceUtils.getURL("classpath:").getPath().substring(1) + "static/img/" + albumId;
             String baseSrc = "/media/img/" + albumId;
-            String imgSrc = "img/" + albumId;
             File folder = new File(baseSrc);
-            System.out.println(folder.setWritable(true, false));
             if (!folder.exists()) {
-                folder.mkdir();
+                folder.mkdirs();
             }
             int duplication = 1;
             String src;
@@ -70,10 +66,12 @@ public class AlbumController {
                 String originalName = mf.getOriginalFilename();
                 src = baseSrc + "/" + originalName;
                 File targetFile = new File(src);
-                targetFile.setWritable(true,false);
+                //targetFile.setWritable(true,false);
                 while (true) {
                     if (targetFile.exists()) {
-                        src = baseSrc + "/" + duplication + originalName;
+                        String fileName = originalName.substring(0,originalName.lastIndexOf("."));
+                        String extension = originalName.substring(originalName.lastIndexOf(".") + 1, originalName.length());
+                        src = baseSrc + "/" + fileName + duplication + extension;
                         targetFile = new File(src);
                         duplication++;
                     } else {
@@ -81,14 +79,12 @@ public class AlbumController {
                         break;
                     }
                 }
-                System.out.println();
                 if(targetFile.createNewFile())
                     FileCopyUtils.copy(mf.getBytes(), new FileOutputStream(targetFile));
-                imgSrc = imgSrc + src.substring(src.lastIndexOf("/"));
 
                 Media media = new Media();
                 media.setAlbumId(albumId);
-                media.setSrc(imgSrc);
+                media.setSrc(src.substring(1));
                 mediaRepository.save(media);// takes 857 ms to save the data...
             }
         } catch (Exception e) {
