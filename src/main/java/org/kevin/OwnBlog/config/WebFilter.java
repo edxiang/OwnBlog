@@ -1,3 +1,4 @@
+/*
 package org.kevin.OwnBlog.config;
 
 import org.apache.catalina.filters.RemoteIpFilter;
@@ -12,12 +13,14 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+*/
 /**
  * Created by Kevin.Z on 2018/3/28.
  * 自己编写的过滤连
  * 还是没有办法做到像 Shiro 那样在没有登录的情况下直接跳转到登录页面
  * .sendRedirect 有问题吗？
  */
+/*
 @Configuration
 public class WebFilter {
     @Bean
@@ -67,3 +70,4 @@ public class WebFilter {
         }
     }
 }
+*/

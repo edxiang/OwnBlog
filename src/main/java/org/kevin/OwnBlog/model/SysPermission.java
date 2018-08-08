@@ -19,7 +19,6 @@ public class SysPermission {
     private Date createTime;
 
     private String name;
-    private String resourceType;
     private String url;
     private String permission;
     private Long parentId;

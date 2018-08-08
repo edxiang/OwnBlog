@@ -1,5 +1,7 @@
 package org.kevin.OwnBlog.controller;
 
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.kevin.OwnBlog.model.*;
 import org.kevin.OwnBlog.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Kevin.Z on 2017/12/18.
@@ -21,27 +24,36 @@ public class MainController {
     @Autowired
     private AlbumService albumService;
 
-    @RequestMapping("/")
+    @RequestMapping({"/", "/index"})
     public String toLogin() {
-        return "redirect:login";
+        return "/main2";
     }
 
     @RequestMapping("/coverPage")
     public String coverPage() {
-        return "main2";
+        return "/main2";
     }
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request, ModelMap map) {
-        Object obj = request.getSession().getAttribute("login");
-        if (obj != null && (Boolean) obj) {
-            return "redirect:coverPage";
+    public String login(HttpServletRequest request, ModelMap map) throws Exception {
+        String exception = (String) request.getAttribute("shiroLoginFailure");
+        System.out.println("exception=" + exception);
+        if (exception != null) {
+            if (UnknownAccountException.class.getName().equals(exception)) {
+                System.out.println("UnknownAccountException -- > 账号不存在：");
+                map.addAttribute("errorCode", 1);
+            } else if (IncorrectCredentialsException.class.getName().equals(exception)) {
+                System.out.println("IncorrectCredentialsException -- > 密码不正确：");
+                map.addAttribute("errorCode", 2);
+            } else {
+                System.out.println("else -- >" + exception);
+            }
         }
-        map.addAttribute("errorCode", "0");
-        return "login";
+
+        return "/login";
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/index", method = RequestMethod.POST)
     public String index(HttpServletRequest request, ModelMap map) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -57,18 +69,18 @@ public class MainController {
             request.getSession().setAttribute("login", true);
             return "main2";
         }
-    }
+    }*/
 
     @RequestMapping("/albums")
     public String albums(ModelMap map) {
         List<Album> albums = albumService.findAll();
         map.addAttribute("albums", albums);
-        return "albums";
+        return "/albums";
     }
 
     @RequestMapping("/addblog")
     public String addBlog() {
-        return "addBlog";
+        return "/addBlog";
     }
 
 }

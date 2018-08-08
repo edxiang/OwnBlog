@@ -3,7 +3,7 @@ $().ready(function(){
         layer.open({
             type:1,
             title: 'upload picture',
-            area:['500px','250px'],
+            area:['420px','250px'],
             content:$("#uploadDiv"),
             cancel:layer.closeAll()
         });
